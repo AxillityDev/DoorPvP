@@ -7,12 +7,17 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header>
-    <h1>DoorPvP Tier List</h1>
-    <input type="text" id="search-bar" placeholder="Wyszukaj gracza...">
+  <header class="hero">
+    <div class="theme-toggle" id="theme-toggle">🌙</div>
+    <h1 class="animated-title">DoorPvP Tier List</h1>
+    <p class="subtitle">Zobacz najlepszych graczy i ich rankingi!</p>
+    <div class="search-container">
+      <input type="text" id="search-bar" placeholder="Wyszukaj gracza...">
+      <span class="icon">&#x1F50D;</span>
+    </div>
   </header>
   <main>
-    <ul id="player-list"></ul>
+    <section id="player-list"></section>
   </main>
   <footer>
     <p>&copy; 2025 DoorPvP</p>
