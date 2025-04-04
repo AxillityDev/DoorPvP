@@ -1,54 +1,99 @@
-const players = [
-  { username: "ItsRealMe", tier: "HT1" },
-  { username: "Marlow", tier: "LT1" },
-  { username: "Swight", tier: "HT2" },
-  { username: "Notch", tier: "LT3" },
-  { username: "Steve", tier: "LT4" },
-  { username: "Technoblade", tier: "HT3" },
-  { username: "ClownPierce", tier: "HT3" },
+const tiersDiv = document.getElementById("tiers");
+const wyszukiwarka = document.getElementById("wyszukiwarka");
+const adminPanel = document.getElementById("admin-panel");
+
+// Przykładowe dane (zastąp danymi z Firebase)
+const gracze = [
+    {
+        id: "1",
+        nazwa: "Gracz1",
+        tiery: {
+            sword: "high tier 3",
+            axe: "low tier 2",
+            nethpot: "high tier 1",
+            diamondpot: "low tier 3",
+            uhc: "low tier 1",
+            smp: "high tier 1",
+            crystal: "high tier 1",
+        },
+    },
+    {
+        id: "2",
+        nazwa: "Gracz2",
+        tiery: {
+            sword: "low tier 5",
+            axe: "high tier 3",
+            nethpot: "low tier 2",
+            diamondpot: "high tier 4",
+            uhc: "high tier 3",
+            smp: "low tier 2",
+            crystal: "low tier 2",
+        },
+    },
 ];
 
-const searchInput = document.getElementById("search");
-const tierFilter = document.getElementById("tierFilter");
-const tierColumns = document.getElementById("tierColumns");
-
-const allTiers = ["HT1", "LT1", "HT2", "LT2", "HT3", "LT3", "HT4", "LT4", "HT5", "LT5"];
-
-function renderPlayers() {
-  const search = searchInput.value.toLowerCase();
-  const selectedTier = tierFilter.value;
-
-  tierColumns.innerHTML = "";
-
-  allTiers.forEach(tier => {
-    const tierPlayers = players.filter(p => {
-      const matchesSearch = p.username.toLowerCase().includes(search);
-      const matchesTier = selectedTier ? p.tier === selectedTier : true;
-      return p.tier === tier && matchesSearch && matchesTier;
-    });
-
-    if (tierPlayers.length > 0) {
-      const column = document.createElement("div");
-      column.className = "tier-column";
-      column.innerHTML = `<div class="tier-title">${tier}</div>`;
-
-      tierPlayers.forEach(player => {
-        const card = document.createElement("div");
-        card.className = "player-card";
-        card.innerHTML = `
-          <img src="https://minotar.net/avatar/${player.username}/60" alt="${player.username}" />
-          <div class="player-name">${player.username}</div>
-        `;
-        column.appendChild(card);
-      });
-
-      tierColumns.appendChild(column);
+async function pobierzAwatar(nazwaGracza) {
+    const response = await fetch(
+        `https://api.mojang.com/users/profiles/minecraft/${nazwaGracza}`
+    );
+    if (!response.ok) {
+        return "default_avatar.png"; // Domyślny awatar
     }
-  });
+    const data = await response.json();
+    const uuid = data.id;
+    return `https://crafatar.com/avatars/${uuid}`;
 }
 
-searchInput.addEventListener("input", renderPlayers);
-tierFilter.addEventListener("change", renderPlayers);
+async function wyswietlGraczy() {
+    tiersDiv.innerHTML = "";
+    for (const gracz of gracze) {
+        const avatarUrl = await pobierzAwatar(gracz.nazwa);
+        const graczDiv = document.createElement("div");
+        graczDiv.classList.add("gracz");
+        graczDiv.innerHTML = `
+            <img src="${avatarUrl}" class="avatar">
+            <h3>${gracz.nazwa}</h3>
+            <p>Sword: ${gracz.tiery.sword}</p>
+            <p>Axe: ${gracz.tiery.axe}</p>
+            <p>Nethpot: ${gracz.tiery.nethpot}</p>
+            <p>Diamondpot: ${gracz.tiery.diamondpot}</p>
+            <p>UHC: ${gracz.tiery.uhc}</p>
+            <p>SMP: ${gracz.tiery.smp}</p>
+            <p>Crystal: ${gracz.tiery.crystal}</p>
+        `;
+        tiersDiv.appendChild(graczDiv);
+    }
+}
 
-// Initial render
-renderPlayers();
+wyswietlGraczy();
+
+wyszukiwarka.addEventListener("input", () => {
+    const szukanaNazwa = wyszukiwarka.value.toLowerCase();
+    const filtrowaniGracze = gracze.filter((gracz) =>
+        gracz.nazwa.toLowerCase().includes(szukanaNazwa)
+    );
+    wyswietlFiltrowanychGraczy(filtrowaniGracze);
+});
+
+async function wyswietlFiltrowanychGraczy(filtrowaniGracze) {
+    tiersDiv.innerHTML = "";
+    for (const gracz of filtrowaniGracze) {
+        const avatarUrl = await pobierzAwatar(gracz.nazwa);
+        const graczDiv = document.createElement("div");
+        graczDiv.classList.add("gracz");
+        graczDiv.innerHTML = `
+            <img src="${avatarUrl}" class="avatar">
+            <h3>${gracz.nazwa}</h3>
+            <p>Sword: ${gracz.tiery.sword}</p>
+            <p>Axe: ${gracz.tiery.axe}</p>
+            <p>Nethpot: ${gracz.tiery.nethpot}</p>
+            <p>Diamondpot: ${gracz.tiery.diamondpot}</p>
+            <p>UHC: ${gracz.tiery.uhc}</p>
+            <p>SMP: ${gracz.tiery.smp}</p>
+            <p>Crystal: ${gracz.tiery.crystal}</p>
+        `;
+        tiersDiv.appendChild(graczDiv);
+    }
+}
+
+// Funkcje do integracji z Firebase i Discordem będą tutaj
