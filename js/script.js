@@ -6,18 +6,20 @@ const players = [
   { username: "MineManner", tier: "LT3" },
 ];
 
-// Function to display player list
+// Function to display player cards
 function displayPlayers(playerList) {
   const playerListElement = document.getElementById("player-list");
   playerListElement.innerHTML = ""; // Clear current list
 
   playerList.forEach((player) => {
-    const playerItem = document.createElement("li");
-    playerItem.innerHTML = `
-      <img src="https://minotar.net/avatar/${player.username}/50" alt="${player.username}" />
-      <span>${player.username} - ${player.tier}</span>
+    const card = document.createElement("div");
+    card.classList.add("player-card");
+    card.innerHTML = `
+      <img src="https://minotar.net/avatar/${player.username}/100" alt="${player.username}" />
+      <span>${player.username}</span>
+      <span>Tier: ${player.tier}</span>
     `;
-    playerListElement.appendChild(playerItem);
+    playerListElement.appendChild(card);
   });
 }
 
@@ -28,6 +30,11 @@ document.getElementById("search-bar").addEventListener("input", (event) => {
     player.username.toLowerCase().includes(searchTerm)
   );
   displayPlayers(filteredPlayers);
+});
+
+// Theme toggle
+document.getElementById("theme-toggle").addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
 });
 
 // Initial display
