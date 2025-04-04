@@ -1,0 +1,50 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #121212;
+  color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  text-align: center;
+  padding: 20px;
+  background: #1e1e1e;
+}
+
+input#search-bar {
+  margin-top: 10px;
+  padding: 10px;
+  width: 50%;
+  border: 1px solid #333;
+  border-radius: 5px;
+  background: #2e2e2e;
+  color: #f4f4f4;
+}
+
+main {
+  padding: 20px;
+}
+
+ul#player-list {
+  list-style: none;
+  padding: 0;
+}
+
+ul#player-list li {
+  display: flex;
+  align-items: center;
+  background: #1e1e1e;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+ul#player-list li img {
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+ul#player-list li span {
+  font-size: 18px;
+}
