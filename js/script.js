@@ -1,55 +1,66 @@
 // Example player data
 const players = [
-  { username: "Technoblade", tier: "HT3" },
-  { username: "Dream", tier: "LT3" },
-  { username: "ClownPierce", tier: "HT4" },
-  { username: "MineManner", tier: "LT4" },
+  { username: "Technoblade", tier: "HT1" },
+  { username: "Dream", tier: "LT2" },
+  { username: "ClownPierce", tier: "HT3" },
+  { username: "MineManner", tier: "LT5" },
 ];
 
-// Function to display player cards
+// State variables
+let currentSort = { column: "username", ascending: true };
+let filteredPlayers = [...players];
+
+// Function to display players in table
 function displayPlayers(playerList) {
   const playerListElement = document.getElementById("player-list");
   playerListElement.innerHTML = ""; // Clear current list
 
   playerList.forEach((player) => {
-    const card = document.createElement("div");
-    card.classList.add("player-card");
-    card.innerHTML = `
-      <img src="https://minotar.net/avatar/${player.username}/100" alt="${player.username}" />
-      <span>${player.username}</span>
-      <span>Tier: ${player.tier}</span>
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${player.username}</td>
+      <td>${player.tier}</td>
     `;
-    playerListElement.appendChild(card);
+    playerListElement.appendChild(row);
   });
 }
 
-// Search functionality with live suggestions
-const searchBar = document.getElementById("search-bar");
-const suggestionsBox = document.getElementById("search-suggestions");
+// Function to sort players
+function sortPlayers(column) {
+  const ascending = currentSort.column === column ? !currentSort.ascending : true;
+  currentSort = { column, ascending };
 
-searchBar.addEventListener("input", (event) => {
-  const searchTerm = event.target.value.toLowerCase();
-  const filteredPlayers = players.filter((player) =>
-    player.username.toLowerCase().includes(searchTerm)
-  );
+  filteredPlayers.sort((a, b) => {
+    if (a[column] > b[column]) return ascending ? 1 : -1;
+    if (a[column] < b[column]) return ascending ? -1 : 1;
+    return 0;
+  });
 
-  suggestionsBox.innerHTML = ""; // Clear suggestions
-  if (searchTerm) {
-    filteredPlayers.forEach((player) => {
-      const suggestion = document.createElement("div");
-      suggestion.textContent = player.username;
-      suggestion.addEventListener("click", () => {
-        searchBar.value = player.username;
-        displayPlayers([player]); // Show only the selected player
-        suggestionsBox.classList.remove("active");
-      });
-      suggestionsBox.appendChild(suggestion);
-    });
-    suggestionsBox.classList.add("active");
+  displayPlayers(filteredPlayers);
+}
+
+// Event listener for sorting
+document.getElementById("sort-username").addEventListener("click", () => {
+  sortPlayers("username");
+});
+document.getElementById("sort-tier").addEventListener("click", () => {
+  sortPlayers("tier");
+});
+
+// Function to filter players by tier
+function filterPlayersByTier(tier) {
+  if (tier === "all") {
+    filteredPlayers = [...players];
   } else {
-    suggestionsBox.classList.remove("active");
+    filteredPlayers = players.filter((player) => player.tier === tier);
   }
+  displayPlayers(filteredPlayers);
+}
+
+// Event listener for tier filter dropdown
+document.getElementById("tier-filter").addEventListener("change", (event) => {
+  filterPlayersByTier(event.target.value);
 });
 
 // Initial display
-displayPlayers(players);
+displayPlayers(filteredPlayers);
