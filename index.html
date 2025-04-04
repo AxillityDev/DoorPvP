@@ -42,20 +42,35 @@
       <!-- Players will render here -->
     </main>
 
+    <!-- Player Modal -->
+    <div id="playerModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+      <div class="bg-gray-800 text-white p-6 rounded-xl shadow-lg max-w-sm w-full">
+        <h2 id="modalPlayerName" class="text-2xl font-semibold mb-4"></h2>
+        <img id="modalPlayerAvatar" class="w-24 h-24 rounded-full mx-auto mb-4" src="" alt="Player Avatar" />
+        <p id="modalPlayerInfo" class="text-sm mb-4">Loading...</p>
+        <button id="closeModal" class="w-full bg-red-600 py-2 rounded-lg">Zamknij</button>
+      </div>
+    </div>
+
     <script>
       const players = [
-        { username: "ItsRealMe", tier: "HT1" },
-        { username: "Marlow", tier: "LT1" },
-        { username: "Swight", tier: "HT2" },
-        { username: "Notch", tier: "LT3" },
-        { username: "Steve", tier: "LT4" },
-        { username: "Technoblade", tier: "HT3" },
-        { username: "ClownPierce", tier: "HT3" },
+        { username: "ItsRealMe", tier: "HT1", info: "Gracz o niesamowitych umiejętnościach w każdej grze. Czołowy gracz w DoorPvP." },
+        { username: "Marlow", tier: "LT1", info: "Nowy gracz, ale z ogromnym potencjałem. Ciągle się rozwija." },
+        { username: "Swight", tier: "HT2", info: "Zdolny gracz z doskonałą strategią. Wysokiej jakości występy." },
+        { username: "Notch", tier: "LT3", info: "Gracz o solidnych umiejętnościach, ale nie zawsze w najlepszej formie." },
+        { username: "Steve", tier: "LT4", info: "Świeży gracz, który dopiero zaczyna swoją przygodę w DoorPvP." },
+        { username: "Technoblade", tier: "HT3", info: "Legendarny gracz w Minecraft, doskonały w każdym aspekcie gry." },
+        { username: "ClownPierce", tier: "HT3", info: "Zawodowiec, który łączy umiejętności PvP z niesamowitą szybkością." },
       ];
 
       const searchInput = document.getElementById("search");
       const tierFilter = document.getElementById("tierFilter");
       const tierColumns = document.getElementById("tierColumns");
+      const playerModal = document.getElementById("playerModal");
+      const closeModal = document.getElementById("closeModal");
+      const modalPlayerName = document.getElementById("modalPlayerName");
+      const modalPlayerAvatar = document.getElementById("modalPlayerAvatar");
+      const modalPlayerInfo = document.getElementById("modalPlayerInfo");
 
       const allTiers = [
         "HT1", "LT1", "HT2", "LT2", "HT3", "LT3", "HT4", "LT4", "HT5", "LT5"
@@ -80,11 +95,12 @@
 
             tierPlayers.forEach((player) => {
               const card = document.createElement("div");
-              card.className = "flex items-center gap-3 mb-3";
+              card.className = "flex items-center gap-3 mb-3 cursor-pointer";
               card.innerHTML = `
                 <img class="w-12 h-12 rounded-md" src="https://minotar.net/avatar/${player.username}/60" alt="${player.username}" />
                 <div class="font-medium text-white">${player.username}</div>
               `;
+              card.onclick = () => openPlayerProfile(player);
               section.appendChild(card);
             });
 
@@ -92,6 +108,18 @@
           }
         });
       }
+
+      function openPlayerProfile(player) {
+        modalPlayerName.innerText = player.username;
+        modalPlayerAvatar.src = `https://minotar.net/avatar/${player.username}/150`;
+        modalPlayerInfo.innerText = player.info;
+
+        playerModal.classList.remove("hidden");
+      }
+
+      closeModal.addEventListener("click", () => {
+        playerModal.classList.add("hidden");
+      });
 
       searchInput.addEventListener("input", renderPlayers);
       tierFilter.addEventListener("change", renderPlayers);
