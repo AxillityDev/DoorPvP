@@ -6,26 +6,29 @@
     <title>DoorPvP Tier List</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #1a202c;
+            color: #fff;
+        }
+    </style>
 </head>
 <body class="bg-gray-900 text-white">
     <div class="container mx-auto p-6">
-        <h1 class="text-4xl font-extrabold text-center text-yellow-400 mb-8">DoorPvP Tier List</h1>
+        <h1 class="text-4xl font-bold text-center mb-6">DoorPvP Tier List</h1>
         
         <div class="flex justify-between items-center mb-4">
-            <!-- Discord Login Button -->
-            <button id="login" class="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg shadow-lg">Zaloguj przez Discord</button>
-            <button id="logout" class="hidden bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-lg shadow-lg">Wyloguj</button>
-            <input type="text" id="search" placeholder="Szukaj gracza..." class="bg-gray-800 text-white p-2 rounded-lg border border-gray-600 w-1/3">
+            <button id="login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Zaloguj przez Discord</button>
+            <button id="logout" class="hidden bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Wyloguj</button>
+            <input type="text" id="search" placeholder="Szukaj gracza..." class="bg-gray-800 text-white p-2 rounded border border-gray-600">
         </div>
         
-        <!-- Tier List -->
-        <div id="tier-list" class="mt-6 space-y-6"></div>
-
-        <!-- Admin Panel -->
-        <div id="admin-panel" class="hidden mt-6 p-6 bg-gray-800 rounded-lg shadow-lg">
-            <h2 class="text-2xl font-bold mb-4 text-yellow-400">Panel Admina</h2>
-            <input type="text" id="player-name" placeholder="Nazwa gracza" class="bg-gray-700 text-white p-2 rounded-lg border border-gray-600 mb-4 w-full">
-            <select id="tier-select" class="bg-gray-700 text-white p-2 rounded-lg border border-gray-600 mb-4 w-full">
+        <div id="tier-list" class="mt-6 space-y-4"></div>
+        
+        <div id="admin-panel" class="hidden mt-6 p-6 bg-gray-800 rounded-lg">
+            <h2 class="text-xl font-bold mb-4">Panel Admina</h2>
+            <input type="text" id="player-name" placeholder="Nazwa gracza" class="bg-gray-700 text-white p-2 rounded border border-gray-600 mb-2">
+            <select id="tier-select" class="bg-gray-700 text-white p-2 rounded border border-gray-600 mb-2">
                 <option value="HT1">HT1</option>
                 <option value="LT1">LT1</option>
                 <option value="HT2">HT2</option>
@@ -37,18 +40,18 @@
                 <option value="HT5">HT5</option>
                 <option value="LT5">LT5</option>
             </select>
-            <button id="add-player" class="bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded-lg shadow-lg w-full">Dodaj Gracza</button>
+            <button id="add-player" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Dodaj gracza</button>
         </div>
     </div>
 
     <script>
-        const SUPABASE_URL = "https://yhboidvqgqsulbqumili.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InloYm9pZHZxZ3FzdWxicXVtaWxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTYzNzMsImV4cCI6MjA1OTM3MjM3M30.oZrPuyYdMzUuIWXwbqiFNk7qjzBz4Eq4MGULQOZMp1U";
+        const SUPABASE_URL = "YOUR_SUPABASE_URL";
+        const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY";
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         let tierData = [];
         let user = null;
 
-        // Fetch the tier list from the database
+        // Function to fetch the tier list data from Supabase
         async function fetchTierList() {
             const { data, error } = await supabase.from("tiers").select("*");
             if (error) {
@@ -59,7 +62,7 @@
             renderTierList();
         }
 
-        // Render tier list and filtered player names
+        // Function to render the tier list based on data
         function renderTierList(searchTerm = "") {
             const tierList = document.getElementById("tier-list");
             tierList.innerHTML = "";
@@ -69,8 +72,8 @@
                 if (filteredPlayers.length === 0) return;
                 
                 const div = document.createElement("div");
-                div.className = "bg-gray-800 p-4 rounded-lg shadow-lg";
-                div.innerHTML = `<h2 class='text-xl font-bold mb-2 text-yellow-400'>${tier.name}</h2>`;
+                div.className = "bg-gray-800 p-4 rounded-lg";
+                div.innerHTML = `<h2 class='text-xl font-bold mb-2'>${tier.name}</h2>`;
                 
                 filteredPlayers.forEach(player => {
                     div.innerHTML += `<p><img src='https://minotar.net/avatar/${player}/32.png' class='inline-block mr-2 rounded-full'> ${player}</p>`;
@@ -80,18 +83,27 @@
             });
         }
 
-        // Search functionality
+        // Search for players by name
         document.getElementById("search").addEventListener("input", (e) => {
             renderTierList(e.target.value);
         });
 
-        // Discord login
+        // Function to handle the Discord login
         async function login() {
-            const { data, error } = await supabase.auth.signInWithOAuth({ provider: "discord" });
-            if (error) console.error("Błąd logowania:", error);
+            try {
+                const { user, error } = await supabase.auth.signInWithOAuth({
+                    provider: "discord",
+                    options: {
+                        redirectTo: window.location.href // Redirect after login
+                    }
+                });
+                if (error) throw error;
+            } catch (error) {
+                console.error("Login error:", error.message);
+            }
         }
 
-        // Logout functionality
+        // Function to log out the user
         async function logout() {
             await supabase.auth.signOut();
             document.getElementById("login").classList.remove("hidden");
@@ -99,29 +111,17 @@
             document.getElementById("admin-panel").classList.add("hidden");
         }
 
-        // Check if the user is logged in and is an admin
+        // Check if the user is logged in
         async function checkAuth() {
             const { data: { user } } = await supabase.auth.getUser();
             if (user) {
                 document.getElementById("login").classList.add("hidden");
                 document.getElementById("logout").classList.remove("hidden");
                 document.getElementById("admin-panel").classList.remove("hidden");
-
-                // Check if the user is an admin
-                const { data: profile, error } = await supabase
-                    .from('profiles')
-                    .select('role')
-                    .eq('id', user.id)
-                    .single();
-
-                if (profile && profile.role === 'admin') {
-                    // Show admin features
-                    document.getElementById("admin-panel").classList.remove("hidden");
-                }
             }
         }
 
-        // Add player to a tier
+        // Function to add a player to a tier
         async function addPlayer() {
             const playerName = document.getElementById("player-name").value.trim();
             const tier = document.getElementById("tier-select").value;
@@ -133,12 +133,12 @@
             fetchTierList();
         }
 
-        // Event listeners for buttons
+        // Add event listeners for login, logout, and adding players
         document.getElementById("login").addEventListener("click", login);
         document.getElementById("logout").addEventListener("click", logout);
         document.getElementById("add-player").addEventListener("click", addPlayer);
 
-        // Initial checks
+        // Call functions on page load
         checkAuth();
         fetchTierList();
     </script>
