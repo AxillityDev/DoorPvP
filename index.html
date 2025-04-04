@@ -10,16 +10,35 @@
   <header class="hero">
     <h1>DoorPvP Tier List</h1>
     <p class="subtitle">Zobacz najlepszych graczy i ich rankingi!</p>
-    <div class="search-container">
-      <input type="text" id="search-bar" placeholder="Wyszukaj gracza...">
-      <div id="search-suggestions" class="suggestions"></div>
+    <div class="filter-container">
+      <label for="tier-filter">Filter by Tier:</label>
+      <select id="tier-filter">
+        <option value="all">All Tiers</option>
+        <option value="HT1">HT1</option>
+        <option value="LT1">LT1</option>
+        <option value="HT2">HT2</option>
+        <option value="LT2">LT2</option>
+        <option value="HT3">HT3</option>
+        <option value="LT3">LT3</option>
+        <option value="HT4">HT4</option>
+        <option value="LT4">LT4</option>
+        <option value="LT5">LT5</option>
+      </select>
     </div>
   </header>
   <main>
-    <section id="player-list" class="grid-container"></section>
+    <table>
+      <thead>
+        <tr>
+          <th id="sort-username">Username &#9650;&#9660;</th>
+          <th id="sort-tier">Tier &#9650;&#9660;</th>
+        </tr>
+      </thead>
+      <tbody id="player-list"></tbody>
+    </table>
   </main>
   <footer>
-    <p>&copy; 2025 DoorPvP | Made with ❤️ by Axillity</p>
+    <p>&copy; 2025 DoorPvP | Designed with style</p>
   </footer>
   <script src="js/script.js"></script>
 </body>
