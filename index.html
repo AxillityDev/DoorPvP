@@ -45,13 +45,16 @@
     </div>
 
     <script>
-        const SUPABASE_URL = "https://yhboidvqgqsulbqumili.supabase.co";
-        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InloYm9pZHZxZ3FzdWxicXVtaWxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTYzNzMsImV4cCI6MjA1OTM3MjM3M30.oZrPuyYdMzUuIWXwbqiFNk7qjzBz4Eq4MGULQOZMp1U";
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        let tierData = [];
-        let user = null;
+        // Replace with your Supabase project credentials
+        const SUPABASE_URL = "YOUR_SUPABASE_URL";
+        const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY";
 
-        // Function to fetch the tier list data from Supabase
+        // Initialize Supabase client
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        let tierData = [];
+
+        // Fetch Tier List from Supabase
         async function fetchTierList() {
             const { data, error } = await supabase.from("tiers").select("*");
             if (error) {
@@ -62,7 +65,7 @@
             renderTierList();
         }
 
-        // Function to render the tier list based on data
+        // Render the tier list on the page
         function renderTierList(searchTerm = "") {
             const tierList = document.getElementById("tier-list");
             tierList.innerHTML = "";
@@ -83,15 +86,14 @@
             });
         }
 
-        // Search for players by name
         document.getElementById("search").addEventListener("input", (e) => {
             renderTierList(e.target.value);
         });
 
-        // Function to handle the Discord login
+        // Function to handle Discord login with Supabase OAuth
         async function login() {
             try {
-                const { user, error } = await supabase.auth.signInWithOAuth({
+                const { data, error } = await supabase.auth.signInWithOAuth({
                     provider: "discord",
                     options: {
                         redirectTo: window.location.href // Redirect after login
