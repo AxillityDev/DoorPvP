@@ -124,3 +124,52 @@ footer {
     opacity: 1;
   }
 }
+/* Table Styles */
+table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+thead {
+  background: #4e54c8;
+  color: #fff;
+}
+
+thead th {
+  padding: 10px;
+  cursor: pointer;
+  text-align: left;
+}
+
+tbody tr {
+  border-bottom: 1px solid #ccc;
+  transition: background 0.3s ease;
+}
+
+tbody tr:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+td {
+  padding: 10px;
+  color: #fff;
+
+/* Filter Dropdown */
+.filter-container {
+  text-align: center;
+  margin: 20px;
+}
+
+#tier-filter {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1em;
+}
+  
