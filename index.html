@@ -1,212 +1,80 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tierlista DoorPvP</title>
-  <style>
-    body {
-      background-color: #0f0f0f;
-      color: white;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header, footer {
-      text-align: center;
-      margin: 2rem 1rem;
-    }
-    h1 {
-      font-size: 2.5rem;
-      font-weight: bold;
-    }
-    .search-bar {
-      margin: 2rem auto;
-      padding: 10px;
-      width: 80%;
-      max-width: 600px;
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
-    }
-    .grid {
-      display: grid;
-      gap: 1.5rem;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      padding: 1rem;
-    }
-    .tier {
-      background-color: #1f1f1f;
-      border-radius: 1.5rem;
-      padding: 1.2rem;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
-      transition: transform 0.2s;
-    }
-    .tier:hover {
-      transform: translateY(-4px);
-    }
-    .tier h2 {
-      font-size: 1.4rem;
-      font-weight: bold;
-      margin-bottom: 0.6rem;
-    }
-    .tier ul {
-      list-style: none;
-      padding-left: 0.5rem;
-    }
-    .tier li {
-      margin-bottom: 0.4rem;
-      display: flex;
-      align-items: center;
-    }
-    .avatar {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      margin-right: 8px;
-      transition: transform 0.3s;
-    }
-    .avatar:hover {
-      transform: scale(1.1);
-    }
-    footer a {
-      color: #3b82f6;
-      text-decoration: underline;
-    }
-    .filter-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin: 1rem;
-    }
-    .filter-buttons button {
-      padding: 10px;
-      background-color: #444;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    .filter-buttons button:hover {
-      background-color: #555;
-    }
-    .tier-box {
-      display: none;
-    }
-    .tier-box.show {
-      display: block;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DoorPvP Tier List</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <header>
-    <h1>Tierlista DoorPvP</h1>
-    <p style="color: gray;">Ranking graczy PvP - tryb Door</p>
-  </header>
+<body class="bg-gray-900 text-white">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-6">DoorPvP Tier List</h1>
+        
+        <div class="flex justify-between items-center mb-4">
+            <button id="login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Zaloguj przez Discord</button>
+            <button id="logout" class="hidden bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Wyloguj</button>
+            <input type="text" id="search" placeholder="Szukaj gracza..." class="bg-gray-800 text-white p-2 rounded border border-gray-600">
+        </div>
+        
+        <div id="tier-list" class="mt-6 space-y-4"></div>
+    </div>
 
-  <input class="search-bar" type="text" id="search" placeholder="Wyszukaj gracza..." />
+    <script>
+        const SUPABASE_URL = "YOUR_SUPABASE_URL";
+        const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY";
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        let tierData = [];
 
-  <div class="filter-buttons">
-    <button onclick="filterTiers('HT1')">HT1</button>
-    <button onclick="filterTiers('LT1')">LT1</button>
-    <button onclick="filterTiers('HT2')">HT2</button>
-    <button onclick="filterTiers('LT2')">LT2</button>
-    <button onclick="filterTiers('HT3')">HT3</button>
-    <button onclick="filterTiers('LT3')">LT3</button>
-    <button onclick="filterTiers('HT4')">HT4</button>
-    <button onclick="filterTiers('LT4')">LT4</button>
-    <button onclick="filterTiers('HT5')">HT5</button>
-    <button onclick="filterTiers('LT5')">LT5</button>
-  </div>
+        async function fetchTierList() {
+            const { data, error } = await supabase.from("tiers").select("*");
+            if (error) {
+                console.error("Błąd pobierania danych:", error);
+                return;
+            }
+            tierData = data;
+            renderTierList();
+        }
 
-  <section class="grid" id="tier-list"></section>
+        function renderTierList(searchTerm = "") {
+            const tierList = document.getElementById("tier-list");
+            tierList.innerHTML = "";
+            
+            tierData.forEach(tier => {
+                const filteredPlayers = tier.players.filter(player => player.toLowerCase().includes(searchTerm.toLowerCase()));
+                if (filteredPlayers.length === 0) return;
+                
+                const div = document.createElement("div");
+                div.className = "bg-gray-800 p-4 rounded-lg";
+                div.innerHTML = `<h2 class='text-xl font-bold mb-2'>${tier.name}</h2>`;
+                
+                filteredPlayers.forEach(player => {
+                    div.innerHTML += `<p><img src='https://minotar.net/avatar/${player}/32.png' class='inline-block mr-2 rounded-full'> ${player}</p>`;
+                });
+                
+                tierList.appendChild(div);
+            });
+        }
 
-  <footer>
-    <p>Dołącz do naszego Discorda, aby zaproponować zmiany w tierliście:</p>
-    <a href="https://discord.gg/twoj-link">discord.gg/twoj-link</a>
-  </footer>
-
-  <script>
-    const tierData = [
-      { name: "HT1", color: "#38bdf8", players: ["Axillity", "WojPRO1"] },
-      { name: "LT1", color: "#60a5fa", players: ["Gracz3", "Gracz4"] },
-      { name: "HT2", color: "#34d399", players: ["Gracz5"] },
-      { name: "LT2", color: "#10b981", players: ["Gracz6"] },
-      { name: "HT3", color: "#facc15", players: ["Gracz7"] },
-      { name: "LT3", color: "#f59e0b", players: ["Gracz8"] },
-      { name: "HT4", color: "#f472b6", players: ["Gracz9"] },
-      { name: "LT4", color: "#e879f9", players: ["Gracz10"] },
-      { name: "HT5", color: "#c084fc", players: ["Gracz11"] },
-      { name: "LT5", color: "#a855f7", players: ["Gracz12"] },
-    ];
-
-    const container = document.getElementById("tier-list");
-    const searchInput = document.getElementById("search");
-
-    // Create tier boxes with players
-    function createTierBoxes() {
-      tierData.forEach(tier => {
-        const tierBox = document.createElement("div");
-        tierBox.className = "tier tier-box";
-        tierBox.id = tier.name;
-
-        const title = document.createElement("h2");
-        title.textContent = tier.name;
-        title.style.color = tier.color;
-        tierBox.appendChild(title);
-
-        const list = document.createElement("ul");
-        tier.players.forEach(player => {
-          const li = document.createElement("li");
-
-          const avatar = document.createElement("img");
-          avatar.className = "avatar";
-          avatar.src = `https://minotar.net/helm/${player}/24.png`;
-          avatar.alt = player;
-
-          const name = document.createElement("span");
-          name.textContent = player;
-
-          li.appendChild(avatar);
-          li.appendChild(name);
-          list.appendChild(li);
+        document.getElementById("search").addEventListener("input", (e) => {
+            renderTierList(e.target.value);
         });
 
-        tierBox.appendChild(list);
-        container.appendChild(tierBox);
-      });
-    }
-
-    // Filter tiers by name
-    function filterTiers(tierName) {
-      const allTiers = document.querySelectorAll(".tier-box");
-      allTiers.forEach(tier => {
-        if (tier.id === tierName || tierName === 'all') {
-          tier.classList.add("show");
-        } else {
-          tier.classList.remove("show");
+        async function login() {
+            const { data, error } = await supabase.auth.signInWithOAuth({ provider: "discord" });
+            if (error) console.error("Błąd logowania:", error);
         }
-      });
-    }
 
-    // Search functionality
-    searchInput.addEventListener("input", function () {
-      const query = searchInput.value.toLowerCase();
-      const allPlayers = container.querySelectorAll("li");
-      allPlayers.forEach(player => {
-        const playerName = player.textContent.toLowerCase();
-        if (playerName.includes(query)) {
-          player.parentElement.parentElement.parentElement.classList.add("show");
-        } else {
-          player.parentElement.parentElement.parentElement.classList.remove("show");
+        async function logout() {
+            await supabase.auth.signOut();
+            document.getElementById("login").classList.remove("hidden");
+            document.getElementById("logout").classList.add("hidden");
         }
-      });
-    });
 
-    // Initial setup
-    createTierBoxes();
-    filterTiers('all');
-  </script>
+        document.getElementById("login").addEventListener("click", login);
+        document.getElementById("logout").addEventListener("click", logout);
+        
+        fetchTierList();
+    </script>
 </body>
 </html>
