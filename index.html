@@ -6,19 +6,21 @@
     <title>DoorPvP Tierlista</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="bg-gray-100 min-h-screen text-gray-800">
-    <header class="text-center py-10 bg-white shadow">
-      <h1 class="text-3xl font-bold">📊 Tierlista DoorPvP</h1>
+  <body class="bg-gray-900 text-gray-100 min-h-screen">
+
+    <!-- Header -->
+    <header class="text-center py-10 bg-gray-800 shadow-lg">
+      <h1 class="text-4xl font-bold text-white">📊 Tierlista DoorPvP</h1>
       <div class="mt-4 flex flex-wrap justify-center gap-4">
         <input
           type="text"
           id="search"
           placeholder="Szukaj gracza..."
-          class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+          class="px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-500"
         />
         <select
           id="tierFilter"
-          class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+          class="px-4 py-2 bg-gray-700 text-white border border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-500"
         >
           <option value="">Wszystkie tier'y</option>
           <option value="HT1">High Tier 1</option>
@@ -35,6 +37,7 @@
       </div>
     </header>
 
+    <!-- Main Content -->
     <main id="tierColumns" class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       <!-- Players will render here -->
     </main>
@@ -54,7 +57,9 @@
       const tierFilter = document.getElementById("tierFilter");
       const tierColumns = document.getElementById("tierColumns");
 
-      const allTiers = ["HT1", "LT1", "HT2", "LT2", "HT3", "LT3", "HT4", "LT4", "HT5", "LT5"];
+      const allTiers = [
+        "HT1", "LT1", "HT2", "LT2", "HT3", "LT3", "HT4", "LT4", "HT5", "LT5"
+      ];
 
       function renderPlayers() {
         const search = searchInput.value.toLowerCase();
@@ -70,15 +75,15 @@
 
           if (tierPlayers.length > 0) {
             const section = document.createElement("section");
-            section.className = "bg-white p-4 rounded-xl shadow";
-            section.innerHTML = `<h2 class="text-xl font-semibold mb-4 border-b pb-1">${tier}</h2>`;
+            section.className = "bg-gray-800 p-4 rounded-xl shadow-lg";
+            section.innerHTML = `<h2 class="text-xl font-semibold text-white mb-4 border-b pb-1">${tier}</h2>`;
 
             tierPlayers.forEach((player) => {
               const card = document.createElement("div");
               card.className = "flex items-center gap-3 mb-3";
               card.innerHTML = `
-                <img class="w-10 h-10 rounded-md" src="https://minotar.net/avatar/${player.username}/60" alt="${player.username}" />
-                <div class="font-medium">${player.username}</div>
+                <img class="w-12 h-12 rounded-md" src="https://minotar.net/avatar/${player.username}/60" alt="${player.username}" />
+                <div class="font-medium text-white">${player.username}</div>
               `;
               section.appendChild(card);
             });
