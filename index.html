@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,18 +14,23 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-900 text-white">
+
     <div class="container mx-auto p-6">
         <h1 class="text-4xl font-bold text-center mb-6">DoorPvP Tier List</h1>
-        
+
+        <!-- User authentication buttons -->
         <div class="flex justify-between items-center mb-4">
             <button id="login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Zaloguj przez Discord</button>
             <button id="logout" class="hidden bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Wyloguj</button>
             <input type="text" id="search" placeholder="Szukaj gracza..." class="bg-gray-800 text-white p-2 rounded border border-gray-600">
         </div>
-        
+
+        <!-- Tier List -->
         <div id="tier-list" class="mt-6 space-y-4"></div>
-        
+
+        <!-- Admin Panel -->
         <div id="admin-panel" class="hidden mt-6 p-6 bg-gray-800 rounded-lg">
             <h2 class="text-xl font-bold mb-4">Panel Admina</h2>
             <input type="text" id="player-name" placeholder="Nazwa gracza" class="bg-gray-700 text-white p-2 rounded border border-gray-600 mb-2">
@@ -49,7 +55,7 @@
         const SUPABASE_URL = "https://yhboidvqgqsulbqumili.supabase.co"; // Replace with your Supabase URL
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InloYm9pZHZxZ3FzdWxicXVtaWxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTYzNzMsImV4cCI6MjA1OTM3MjM3M30.oZrPuyYdMzUuIWXwbqiFNk7qjzBz4Eq4MGULQOZMp1U"; // Replace with your Supabase Anon Key
 
-        // Initialize Supabase client after configuration
+        // Initialize Supabase client
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         let tierData = [];
@@ -70,23 +76,24 @@
         function renderTierList(searchTerm = "") {
             const tierList = document.getElementById("tier-list");
             tierList.innerHTML = "";
-            
+
             tierData.forEach(tier => {
                 const filteredPlayers = tier.players.filter(player => player.toLowerCase().includes(searchTerm.toLowerCase()));
                 if (filteredPlayers.length === 0) return;
-                
+
                 const div = document.createElement("div");
                 div.className = "bg-gray-800 p-4 rounded-lg";
                 div.innerHTML = `<h2 class='text-xl font-bold mb-2'>${tier.name}</h2>`;
-                
+
                 filteredPlayers.forEach(player => {
                     div.innerHTML += `<p><img src='https://minotar.net/avatar/${player}/32.png' class='inline-block mr-2 rounded-full'> ${player}</p>`;
                 });
-                
+
                 tierList.appendChild(div);
             });
         }
 
+        // Event listener for search input
         document.getElementById("search").addEventListener("input", (e) => {
             renderTierList(e.target.value);
         });
@@ -129,7 +136,7 @@
             const playerName = document.getElementById("player-name").value.trim();
             const tier = document.getElementById("tier-select").value;
             if (!playerName) return alert("Podaj nazwę gracza!");
-            
+
             const { error } = await supabase.from("tiers").update({ players: supabase.raw(`array_append(players, '${playerName}')`) }).eq("name", tier);
             if (error) return console.error("Błąd dodawania gracza:", error);
             alert("Gracz dodany!");
@@ -146,4 +153,5 @@
         fetchTierList();
     </script>
 </body>
+
 </html>
