@@ -9,7 +9,7 @@
     <style>
         body {
             background-color: #1a202c;
-            color: #fff;
+            color: white;
         }
     </style>
 </head>
@@ -46,13 +46,14 @@
 
     <script>
         // Supabase configuration
-        const SUPABASE_URL = "YOUR_SUPABASE_URL"; // Replace with your Supabase URL
-        const SUPABASE_KEY = "YOUR_SUPABASE_ANON_KEY"; // Replace with your Supabase Anon Key
+        const SUPABASE_URL = "https://yhboidvqgqsulbqumili.supabase.co"; // Replace with your Supabase URL
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InloYm9pZHZxZ3FzdWxicXVtaWxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTYzNzMsImV4cCI6MjA1OTM3MjM3M30.oZrPuyYdMzUuIWXwbqiFNk7qjzBz4Eq4MGULQOZMp1U"; // Replace with your Supabase Anon Key
 
         // Initialize Supabase client after configuration
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         let tierData = [];
+        let user = null;
 
         // Fetch Tier List from Supabase
         async function fetchTierList() {
