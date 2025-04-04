@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DoorPvP Tierlista</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>📜 DoorPvP Tierlista</h1>
+
+    <div class="filters">
+      <input type="text" id="search" placeholder="Szukaj gracza..." />
+      <select id="tierFilter">
+        <option value="">Wszystkie tier'y</option>
+        <option value="HT1">High Tier 1</option>
+        <option value="LT1">Low Tier 1</option>
+        <option value="HT2">High Tier 2</option>
+        <option value="LT2">Low Tier 2</option>
+        <option value="HT3">High Tier 3</option>
+        <option value="LT3">Low Tier 3</option>
+        <option value="HT4">High Tier 4</option>
+        <option value="LT4">Low Tier 4</option>
+        <option value="HT5">High Tier 5</option>
+        <option value="LT5">Low Tier 5</option>
+      </select>
+    </div>
+
+    <section id="players" class="player-list">
+      <!-- Player cards will be added here -->
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
