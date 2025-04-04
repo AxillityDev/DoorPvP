@@ -1,60 +1,75 @@
-body {
-  font-family: sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
+* {
+  box-sizing: border-box;
 }
 
-.container {
-  max-width: 900px;
-  margin: auto;
-  padding: 20px;
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f0f2f5;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+header {
+  text-align: center;
+  padding: 30px 15px 10px;
 }
 
 h1 {
-  text-align: center;
-  font-size: 2.2rem;
-  margin-bottom: 20px;
+  font-size: 2rem;
+  margin-bottom: 10px;
 }
 
-.filters {
+.controls {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   gap: 10px;
-  margin-bottom: 30px;
+  flex-wrap: wrap;
+  padding: 10px;
 }
 
-.filters input,
-.filters select {
+input, select {
   padding: 10px;
   font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
-.player-list {
+.tier-columns {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  padding: 20px;
 }
 
-.card {
+.tier-column {
   background: white;
+  border-radius: 10px;
   padding: 15px;
-  border-radius: 12px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tier-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.player-card {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
-.card img {
-  width: 50px;
-  border-radius: 8px;
+.player-card img {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
 }
 
-.card-info p {
-  margin: 0;
-}
-
-.card-info .name {
-  font-weight: bold;
+.player-name {
+  font-weight: 600;
 }
