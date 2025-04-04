@@ -1,36 +1,97 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DoorPvP Tierlista</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <h1>📊 Tierlista DoorPvP</h1>
-    <div class="controls">
-      <input type="text" id="search" placeholder="Szukaj gracza..." />
-      <select id="tierFilter">
-        <option value="">Wszystkie tier'y</option>
-        <option value="HT1">High Tier 1</option>
-        <option value="LT1">Low Tier 1</option>
-        <option value="HT2">High Tier 2</option>
-        <option value="LT2">Low Tier 2</option>
-        <option value="HT3">High Tier 3</option>
-        <option value="LT3">Low Tier 3</option>
-        <option value="HT4">High Tier 4</option>
-        <option value="LT4">Low Tier 4</option>
-        <option value="HT5">High Tier 5</option>
-        <option value="LT5">Low Tier 5</option>
-      </select>
-    </div>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DoorPvP Tierlista</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen text-gray-800">
+    <header class="text-center py-10 bg-white shadow">
+      <h1 class="text-3xl font-bold">📊 Tierlista DoorPvP</h1>
+      <div class="mt-4 flex flex-wrap justify-center gap-4">
+        <input
+          type="text"
+          id="search"
+          placeholder="Szukaj gracza..."
+          class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+        />
+        <select
+          id="tierFilter"
+          class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+        >
+          <option value="">Wszystkie tier'y</option>
+          <option value="HT1">High Tier 1</option>
+          <option value="LT1">Low Tier 1</option>
+          <option value="HT2">High Tier 2</option>
+          <option value="LT2">Low Tier 2</option>
+          <option value="HT3">High Tier 3</option>
+          <option value="LT3">Low Tier 3</option>
+          <option value="HT4">High Tier 4</option>
+          <option value="LT4">Low Tier 4</option>
+          <option value="HT5">High Tier 5</option>
+          <option value="LT5">Low Tier 5</option>
+        </select>
+      </div>
+    </header>
 
-  <main id="tierColumns" class="tier-columns">
-    <!-- Player cards will go here by tier -->
-  </main>
+    <main id="tierColumns" class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Players will render here -->
+    </main>
 
-  <script src="script.js"></script>
-</body>
+    <script>
+      const players = [
+        { username: "ItsRealMe", tier: "HT1" },
+        { username: "Marlow", tier: "LT1" },
+        { username: "Swight", tier: "HT2" },
+        { username: "Notch", tier: "LT3" },
+        { username: "Steve", tier: "LT4" },
+        { username: "Technoblade", tier: "HT3" },
+        { username: "ClownPierce", tier: "HT3" },
+      ];
+
+      const searchInput = document.getElementById("search");
+      const tierFilter = document.getElementById("tierFilter");
+      const tierColumns = document.getElementById("tierColumns");
+
+      const allTiers = ["HT1", "LT1", "HT2", "LT2", "HT3", "LT3", "HT4", "LT4", "HT5", "LT5"];
+
+      function renderPlayers() {
+        const search = searchInput.value.toLowerCase();
+        const selectedTier = tierFilter.value;
+        tierColumns.innerHTML = "";
+
+        allTiers.forEach((tier) => {
+          const tierPlayers = players.filter((p) => {
+            const matchesSearch = p.username.toLowerCase().includes(search);
+            const matchesTier = selectedTier ? p.tier === selectedTier : true;
+            return p.tier === tier && matchesSearch && matchesTier;
+          });
+
+          if (tierPlayers.length > 0) {
+            const section = document.createElement("section");
+            section.className = "bg-white p-4 rounded-xl shadow";
+            section.innerHTML = `<h2 class="text-xl font-semibold mb-4 border-b pb-1">${tier}</h2>`;
+
+            tierPlayers.forEach((player) => {
+              const card = document.createElement("div");
+              card.className = "flex items-center gap-3 mb-3";
+              card.innerHTML = `
+                <img class="w-10 h-10 rounded-md" src="https://minotar.net/avatar/${player.username}/60" alt="${player.username}" />
+                <div class="font-medium">${player.username}</div>
+              `;
+              section.appendChild(card);
+            });
+
+            tierColumns.appendChild(section);
+          }
+        });
+      }
+
+      searchInput.addEventListener("input", renderPlayers);
+      tierFilter.addEventListener("change", renderPlayers);
+
+      renderPlayers();
+    </script>
+  </body>
 </html>
