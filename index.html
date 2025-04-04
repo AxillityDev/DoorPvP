@@ -8,19 +8,18 @@
 </head>
 <body>
   <header class="hero">
-    <div class="theme-toggle" id="theme-toggle">🌙</div>
-    <h1 class="animated-title">DoorPvP Tier List</h1>
+    <h1>DoorPvP Tier List</h1>
     <p class="subtitle">Zobacz najlepszych graczy i ich rankingi!</p>
     <div class="search-container">
       <input type="text" id="search-bar" placeholder="Wyszukaj gracza...">
-      <span class="icon">&#x1F50D;</span>
+      <div id="search-suggestions" class="suggestions"></div>
     </div>
   </header>
   <main>
-    <section id="player-list"></section>
+    <section id="player-list" class="grid-container"></section>
   </main>
   <footer>
-    <p>&copy; 2025 DoorPvP</p>
+    <p>&copy; 2025 DoorPvP | Made with ❤️ by Axillity</p>
   </footer>
   <script src="js/script.js"></script>
 </body>
