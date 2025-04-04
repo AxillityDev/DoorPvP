@@ -1,75 +1,36 @@
-* {
-  box-sizing: border-box;
-}
-
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f0f2f5;
-  margin: 0;
-  padding: 0;
-  color: #333;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
 header {
-  text-align: center;
-  padding: 30px 15px 10px;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
 }
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 10px;
+main {
+    padding: 1rem;
 }
 
-.controls {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  padding: 10px;
+#tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
 }
 
-input, select {
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+.div-gracz {
+    background-color: white;
+    border-radius: 5px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.tier-columns {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 25px;
-  padding: 20px;
-}
-
-.tier-column {
-  background: white;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.tier-title {
-  font-weight: bold;
-  font-size: 1.2rem;
-  margin-bottom: 15px;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 5px;
-}
-
-.player-card {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.player-card img {
-  width: 40px;
-  height: 40px;
-  border-radius: 6px;
-}
-
-.player-name {
-  font-weight: 600;
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
