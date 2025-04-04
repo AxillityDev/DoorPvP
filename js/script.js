@@ -1,9 +1,9 @@
 // Example player data
 const players = [
-  { username: "Technoblade", tier: "HT4" },
-  { username: "Dream", tier: "LT4" },
-  { username: "ClownPierce", tier: "HT3" },
-  { username: "MineManner", tier: "LT3" },
+  { username: "Technoblade", tier: "HT3" },
+  { username: "Dream", tier: "LT3" },
+  { username: "ClownPierce", tier: "HT4" },
+  { username: "MineManner", tier: "LT4" },
 ];
 
 // Function to display player cards
@@ -23,18 +23,32 @@ function displayPlayers(playerList) {
   });
 }
 
-// Search function
-document.getElementById("search-bar").addEventListener("input", (event) => {
+// Search functionality with live suggestions
+const searchBar = document.getElementById("search-bar");
+const suggestionsBox = document.getElementById("search-suggestions");
+
+searchBar.addEventListener("input", (event) => {
   const searchTerm = event.target.value.toLowerCase();
   const filteredPlayers = players.filter((player) =>
     player.username.toLowerCase().includes(searchTerm)
   );
-  displayPlayers(filteredPlayers);
-});
 
-// Theme toggle
-document.getElementById("theme-toggle").addEventListener("click", () => {
-  document.body.classList.toggle("light-mode");
+  suggestionsBox.innerHTML = ""; // Clear suggestions
+  if (searchTerm) {
+    filteredPlayers.forEach((player) => {
+      const suggestion = document.createElement("div");
+      suggestion.textContent = player.username;
+      suggestion.addEventListener("click", () => {
+        searchBar.value = player.username;
+        displayPlayers([player]); // Show only the selected player
+        suggestionsBox.classList.remove("active");
+      });
+      suggestionsBox.appendChild(suggestion);
+    });
+    suggestionsBox.classList.add("active");
+  } else {
+    suggestionsBox.classList.remove("active");
+  }
 });
 
 // Initial display
