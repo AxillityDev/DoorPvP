@@ -223,16 +223,20 @@
         }
         
         .player-avatar {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             margin-right: 12px;
-            background-color: var(--hover-bg);
             border-radius: 6px;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+        }
+        
+        .player-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         
         .player-name {
@@ -491,7 +495,18 @@
                     
                     const playerAvatar = document.createElement('div');
                     playerAvatar.className = 'player-avatar';
-                    playerAvatar.textContent = player.name.charAt(0);
+                    
+                    // Add Minotar avatar image
+                    const avatarImg = document.createElement('img');
+                    // Use Minotar API to get player head
+                    avatarImg.src = `https://minotar.net/helm/${player.name}/32.png`;
+                    avatarImg.alt = player.name;
+                    avatarImg.onerror = function() {
+                        // Fallback if image loading fails
+                        this.src = `https://minotar.net/helm/MHF_Steve/32.png`;
+                    };
+                    
+                    playerAvatar.appendChild(avatarImg);
                     tierPlayer.appendChild(playerAvatar);
                     
                     const playerName = document.createElement('div');
@@ -573,7 +588,6 @@
                     }
                 });
                 
-                // If no search term, make sure all columns are visible
                 if (searchTerm === '') {
                     tierColumns.forEach(column => {
                         column.classList.remove('empty');
