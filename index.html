@@ -4,370 +4,232 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MC TIERS - Ranking Graczy Minecraft DoorPvP</title>
-    <style>
-        :root {
-            --bg-color: #0f0f13;
-            --card-bg: #1a1a23;
-            --accent-color: #5d4aff;
-            --text-color: #ffffff;
-            --text-secondary: #a0a0b8;
-            --border-color: #2a2a38;
-            --hover-bg: #252533;
-            
-            /* Tier colors */
-            --tier1-color: #ff4a4a;
-            --tier2-color: #ff8c4a;
-            --tier3-color: #ffcc4a;
-            --tier4-color: #4aff62;
-            --tier5-color: #4acdff;
-        }
+<style>
+    :root {
+      --bg-color: #0f0f13;
+      --card-bg: #1a1a23;
+      --accent-color: #5d4aff;
+      --text-color: #ffffff;
+      --text-secondary: #a0a0b8;
+      --border-color: #2a2a38;
+      --hover-bg: #252533;
 
-        * {
-            box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-        
-        .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 18px 40px;
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            background: linear-gradient(45deg, #5d4aff, #b476e5);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.5px;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-        
-        .logo:hover {
-            transform: scale(1.05);
-        }
-        
-        .logo span {
-            color: var(--text-color);
-        }
-        
-        .navigation {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .navigation a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            font-size: 14px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-        }
-        
-        .navigation a:hover {
-            color: var(--text-color);
-            background-color: var(--hover-bg);
-            transform: translateY(-2px);
-        }
-        
-        .search-container {
-            position: relative;
-        }
-        
-        .search-input {
-            background-color: var(--hover-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 10px 12px 10px 36px;
-            color: var(--text-color);
-            width: 200px;
-            font-size: 14px;
-            transition: all 0.2s ease;
-        }
-        
-        .search-input:focus {
-            border-color: var(--accent-color);
-            outline: none;
-            width: 240px;
-        }
-        
-        .search-icon {
-            position: absolute;
-            left: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-        
-        .game-mode {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px 40px;
-            gap: 8px;
-            background-color: var(--card-bg);
-            margin: 24px 40px;
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .game-mode-icon {
-            font-size: 24px;
-            margin-right: 8px;
-        }
-        
-        .game-mode-text {
-            font-size: 18px;
-            font-weight: 600;
-        }
-        
-        .main-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            padding: 0 40px 40px;
-        }
-        
-        .tier-column {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            animation: slideIn 0.4s ease backwards;
-        }
-        
-        .tier-column:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-        
-        .tier-header {
-            background-color: var(--hover-bg);
-            padding: 14px;
-            text-align: center;
-            font-weight: 700;
-            font-size: 16px;
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            border-bottom: 1px solid var(--border-color);
-            cursor: pointer;
-        }
-        
-        .trophy {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .toggle-icon {
-            font-size: 16px;
-            transition: transform 0.3s ease;
-        }
-        
-        .collapsed .toggle-icon {
-            transform: rotate(180deg);
-        }
-        
-        .tier-players {
-            max-height: 500px; /* Fixed value for expanded state */
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-        }
-        
-        .collapsed .tier-players {
-            max-height: 0; /* No height when collapsed */
-        }
-        
-        .tier-player {
-            display: flex;
-            align-items: center;
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--border-color);
-            position: relative;
-            transition: all 0.15s ease;
-        }
-        
-        .tier-player:last-child {
-            border-bottom: none;
-        }
-        
-        .tier-player:hover {
-            background-color: var(--hover-bg);
-        }
-        
-        .player-avatar {
-            width: 32px;
-            height: 32px;
-            margin-right: 12px;
-            border-radius: 6px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .player-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .player-name {
-            flex-grow: 1;
-            font-size: 14px;
-            font-weight: 500;
-        }
-        
-        .player-rank {
-            display: flex;
-            align-items: center;
-        }
-        
-        .rank-arrow {
-            color: var(--accent-color);
-            font-size: 14px;
-            margin-left: 2px;
-        }
-        
-        .double-arrow .rank-arrow {
-            color: #ffcc00;
-        }
-        
-        .show-kit-button {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: var(--accent-color);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            border: none;
-            box-shadow: 0 4px 12px rgba(93, 74, 255, 0.3);
-            transition: all 0.2s ease;
-            z-index: 100;
-        }
-        
-        .show-kit-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(93, 74, 255, 0.4);
-        }
-        
-        .kit-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        
-        .kit-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        
-        .kit-content {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 24px;
-            width: 80%;
-            max-width: 600px;
-            border: 1px solid var(--border-color);
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-        }
-        
-        .kit-overlay.active .kit-content {
-            transform: translateY(0);
-        }
-        
-        .kit-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-        
-        .kit-title {
-            font-size: 20px;
-            font-weight: 700;
-        }
-        
-        .close-kit {
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 22px;
-            cursor: pointer;
-            padding: 4px;
-        }
-        
-        .kit-image {
-            width: 100%;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slideIn {
-            from { 
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Fix for empty tier columns when all players are filtered out */
-        .tier-column.empty {
-            display: none;
-        }
-    </style>
+      --tier1-color: #ff4a4a;
+      --tier2-color: #ff8c4a;
+      --tier3-color: #ffcc4a;
+      --tier4-color: #4aff62;
+      --tier5-color: #4acdff;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      background-color: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      background: linear-gradient(45deg, #5d4aff, #b476e5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .logo span {
+      color: var(--text-color);
+    }
+
+    .navigation {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .navigation a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .navigation a:hover {
+      color: var(--text-color);
+      background-color: var(--hover-bg);
+      transform: translateY(-2px);
+    }
+
+    .search-container {
+      position: relative;
+      flex: 1;
+      max-width: 240px;
+    }
+
+    .search-input {
+      background-color: var(--hover-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 12px 10px 36px;
+      color: var(--text-color);
+      width: 100%;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-color);
+      outline: none;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+
+    .game-mode {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 20px;
+      gap: 8px;
+      background-color: var(--card-bg);
+      margin: 24px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      animation: fadeIn 0.5s ease;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+
+    .game-mode-icon {
+      font-size: 24px;
+      margin-right: 8px;
+    }
+
+    .game-mode-text {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 0 20px 40px;
+    }
+
+    /* ... Keep the rest of your CSS unchanged ... */
+
+    .kit-content {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 24px;
+      width: 90%;
+      max-width: 600px;
+      border: 1px solid var(--border-color);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px 20px;
+      }
+
+      .navigation {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .search-container {
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .game-mode {
+        margin: 16px 10px;
+        padding: 16px;
+      }
+
+      .main-content {
+        padding: 0 10px 30px;
+        gap: 12px;
+      }
+
+      .show-kit-button {
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+
+      .kit-content {
+        padding: 16px;
+        width: 95%;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tier-column.empty {
+      display: none;
+    }
+</style>
 </head>
 <body>
     <div class="header">
