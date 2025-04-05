@@ -436,12 +436,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }));
 
   const tierContainer = document.getElementById('tier-container');
-  tiers.forEach(t => {
-    const block = document.createElement('div');
-    block.innerHTML = `<h2 style="color: ${t.color}">${t.tier}</h2>
-      <ul>${t.players.map(p => `<li>${p.name} ${p.isHT ? '(HT)' : '(LT)'}</li>`).join('')}</ul>`;
-    tierContainer.appendChild(block);
-  });
 });
 </script>
 
