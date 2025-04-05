@@ -3,74 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tierlist DoorPvP</title>
+  <title>Lista Tierów DoorPvP</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-gray-100">
   <header class="py-6 bg-gray-800">
     <div class="container mx-auto text-center">
-      <h1 class="text-4xl font-bold">Tierlist DoorPvP</h1>
-      <p class="mt-2 text-lg text-gray-400">Sprawdź rankingi graczy w DoorPvP!</p>
+      <h1 class="text-2xl md:text-4xl font-bold">Lista Tierów DoorPvP</h1>
+      <p class="mt-2 text-sm md:text-lg text-gray-400">Sprawdź rankingi graczy według poziomów</p>
     </div>
   </header>
 
-  <main class="container mx-auto mt-6 px-4">
-    <div class="grid grid-cols-10 gap-4">
+  <main class="container mx-auto mt-6 px-2 md:px-4">
+    <!-- Responsive grid with tier columns -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 xl:grid-cols-10 gap-4 overflow-x-auto">
       <!-- HT1 -->
-      <div id="ht1-column" class="bg-green-600 rounded-lg p-4">
-        <h2 class="text-xl font-bold text-center text-gray-100 border-b border-gray-700 pb-2">HT1</h2>
+      <div id="ht1-column" class="bg-green-600 rounded-lg p-2 sm:p-4">
+        <h2 class="text-lg md:text-xl font-bold text-center text-gray-100 border-b border-gray-700 pb-2">HT1</h2>
         <ul class="space-y-2" id="ht1-list"></ul>
       </div>
       <!-- LT1 -->
-      <div id="lt1-column" class="bg-green-400 rounded-lg p-4">
-        <h2 class="text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">LT1</h2>
+      <div id="lt1-column" class="bg-green-400 rounded-lg p-2 sm:p-4">
+        <h2 class="text-lg md:text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">LT1</h2>
         <ul class="space-y-2" id="lt1-list"></ul>
       </div>
       <!-- HT2 -->
-      <div id="ht2-column" class="bg-blue-600 rounded-lg p-4">
-        <h2 class="text-xl font-bold text-center text-gray-100 border-b border-gray-700 pb-2">HT2</h2>
+      <div id="ht2-column" class="bg-blue-600 rounded-lg p-2 sm:p-4">
+        <h2 class="text-lg md:text-xl font-bold text-center text-gray-100 border-b border-gray-700 pb-2">HT2</h2>
         <ul class="space-y-2" id="ht2-list"></ul>
       </div>
       <!-- LT2 -->
-      <div id="lt2-column" class="bg-blue-400 rounded-lg p-4">
-        <h2 class="text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">LT2</h2>
+      <div id="lt2-column" class="bg-blue-400 rounded-lg p-2 sm:p-4">
+        <h2 class="text-lg md:text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">LT2</h2>
         <ul class="space-y-2" id="lt2-list"></ul>
       </div>
       <!-- HT3 -->
-      <div id="ht3-column" class="bg-yellow-500 rounded-lg p-4">
-        <h2 class="text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">HT3</h2>
+      <div id="ht3-column" class="bg-yellow-500 rounded-lg p-2 sm:p-4">
+        <h2 class="text-lg md:text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">HT3</h2>
         <ul class="space-y-2" id="ht3-list"></ul>
       </div>
       <!-- LT3 -->
-      <div id="lt3-column" class="bg-yellow-300 rounded-lg p-4">
-        <h2 class="text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">LT3</h2>
+      <div id="lt3-column" class="bg-yellow-300 rounded-lg p-2 sm:p-4">
+        <h2 class="text-lg md:text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">LT3</h2>
         <ul class="space-y-2" id="lt3-list"></ul>
       </div>
       <!-- HT4 -->
-      <div id="ht4-column" class="bg-orange-500 rounded-lg p-4">
-        <h2 class="text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">HT4</h2>
+      <div id="ht4-column" class="bg-orange-500 rounded-lg p-2 sm:p-4">
+        <h2 class="text-lg md:text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">HT4</h2>
         <ul class="space-y-2" id="ht4-list"></ul>
       </div>
       <!-- LT4 -->
-      <div id="lt4-column" class="bg-orange-300 rounded-lg p-4">
-        <h2 class="text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">LT4</h2>
+      <div id="lt4-column" class="bg-orange-300 rounded-lg p-2 sm:p-4">
+        <h2 class="text-lg md:text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">LT4</h2>
         <ul class="space-y-2" id="lt4-list"></ul>
       </div>
       <!-- HT5 -->
-      <div id="ht5-column" class="bg-red-600 rounded-lg p-4">
-        <h2 class="text-xl font-bold text-center text-gray-100 border-b border-gray-700 pb-2">HT5</h2>
+      <div id="ht5-column" class="bg-red-600 rounded-lg p-2 sm:p-4">
+        <h2 class="text-lg md:text-xl font-bold text-center text-gray-100 border-b border-gray-700 pb-2">HT5</h2>
         <ul class="space-y-2" id="ht5-list"></ul>
       </div>
       <!-- LT5 -->
-      <div id="lt5-column" class="bg-red-800 rounded-lg p-4">
-        <h2 class="text-xl font-bold text-center text-gray-100 border-b border-gray-700 pb-2">LT5</h2>
+      <div id="lt5-column" class="bg-red-800 rounded-lg p-2 sm:p-4">
+        <h2 class="text-lg md:text-xl font-bold text-center text-gray-100 border-b border-gray-700 pb-2">LT5</h2>
         <ul class="space-y-2" id="lt5-list"></ul>
       </div>
     </div>
   </main>
 
   <footer class="py-4 bg-gray-800 text-center text-gray-400 mt-6">
-    <p>&copy; 2025 DoorPvP | Zaprojektowane przez Axillity</p>
+    <p>&copy; 2025 DoorPvP | Zaprojektowane dla społeczności PvP</p>
   </footer>
 
   <script src="js/script.js"></script>
