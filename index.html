@@ -404,6 +404,71 @@
             <img src="https://i.ibb.co/PZBb4wLq/Zrzut-ekranu-2025-04-04-203004.png" alt="DoorPvP Kit" class="kit-image">
         </div>
     </div>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+const supabaseUrl = 'https://yhboidvqgqsulbqumili.supabase.co';
+const supabaseKey = 'your_anon_key';
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Static tier structure
+const tiers = [
+  { tier: "Tier 1", color: "var(--tier1-color)", players: [] },
+  { tier: "Tier 2", color: "var(--tier2-color)", players: [] },
+  { tier: "Tier 3", color: "var(--tier3-color)", players: [] },
+  { tier: "Tier 4", color: "var(--tier4-color)", players: [] },
+  { tier: "Tier 5", color: "var(--tier5-color)", players: [] }
+];
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const { data: players, error } = await supabase
+    .from('tiers')
+    .select('*');
+
+  if (error) {
+    console.error('Error fetching data:', error);
+    return;
+  }
+
+  // Inject players into correct tiers
+  players.forEach(p => {
+    const tierIndex = p.tier - 1;
+    if (tierIndex >= 0 && tierIndex < tiers.length) {
+      tiers[tierIndex].players.push({
+        name: p.player_name,
+        isHT: p.is_ht
+      });
+    }
+  });
+
+  // Render to DOM
+  const tierContainer = document.getElementById('tier-container');
+  tierContainer.innerHTML = ''; // clear if rerendering
+
+  tiers.forEach(t => {
+    const block = document.createElement('div');
+    block.className = 'tier-card'; // optional class
+    block.innerHTML = `
+      <div class="tier-header" style="background-color: ${t.color};">
+        🏆 ${t.tier}
+        <span style="float: right;">▼</span>
+      </div>
+      <div class="tier-players">
+        ${t.players.map(p => `
+          <div class="player-entry">
+            <img class="avatar" src="https://mc-heads.net/avatar/${p.name}/32" alt="${p.name}" />
+            <span class="player-name">${p.name}</span>
+            <span class="tier-symbols">
+              ${p.isHT ? '▲▲' : '▲'}
+            </span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    tierContainer.appendChild(block);
+  });
+});
+</script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
