@@ -13,10 +13,6 @@
             --text-secondary: #a0a0b8;
             --border-color: #2a2a38;
             --hover-bg: #252533;
-            --gold-color: #ffc107;
-            --medal-gold: #ffc107;
-            --medal-silver: #95a5a6;
-            --medal-bronze: #cd7f32;
             
             /* Tier colors */
             --tier1-color: #ff4a4a;
@@ -24,13 +20,6 @@
             --tier3-color: #ffcc4a;
             --tier4-color: #4aff62;
             --tier5-color: #4acdff;
-            
-            /* HT colors */
-            --ht1-color: #ff4a4a;
-            --ht2-color: #ff8c4a;
-            --ht3-color: #ffcc4a;
-            --lt1-color: #4aff62;
-            --lt2-color: #4acdff;
         }
 
         * {
@@ -223,7 +212,6 @@
             border-bottom: 1px solid var(--border-color);
             position: relative;
             transition: all 0.15s ease;
-            cursor: pointer;
         }
         
         .tier-player:last-child {
@@ -359,272 +347,6 @@
             border: 1px solid var(--border-color);
         }
         
-        /* Player profile modal styles */
-        .player-profile-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        
-        .player-profile-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        
-        .profile-content {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            width: 90%;
-            max-width: 400px;
-            border: 1px solid var(--border-color);
-            transform: translateY(20px);
-            transition: transform 0.3s ease;
-            overflow: hidden;
-        }
-        
-        .player-profile-overlay.active .profile-content {
-            transform: translateY(0);
-        }
-        
-        .profile-header {
-            position: relative;
-            padding: 24px;
-            text-align: center;
-        }
-        
-        .close-profile {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: rgba(0, 0, 0, 0.3);
-            border: none;
-            color: var(--text-color);
-            font-size: 22px;
-            cursor: pointer;
-            padding: 4px;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .profile-avatar-container {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 16px;
-        }
-        
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 2px solid var(--gold-color);
-            overflow: hidden;
-            margin: 0 auto;
-        }
-        
-        .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .profile-badge {
-            position: absolute;
-            bottom: 0;
-            right: 10px;
-            background: linear-gradient(45deg, #ffc107, #ff8c00);
-            color: #000;
-            font-weight: 600;
-            font-size: 12px;
-            padding: 4px 10px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        
-        .profile-name {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        
-        .profile-region {
-            color: var(--text-secondary);
-            font-size: 14px;
-            margin-bottom: 16px;
-        }
-        
-        .profile-section {
-            padding: 20px;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        .section-title {
-            font-size: 14px;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-            letter-spacing: 1px;
-        }
-        
-        .position-card {
-            background-color: var(--hover-bg);
-            border-radius: 8px;
-            padding: 12px;
-            display: flex;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-        
-        .position-number {
-            background-color: var(--gold-color);
-            color: #000;
-            font-weight: 700;
-            width: 40px;
-            height: 36px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 12px;
-        }
-        
-        .position-label {
-            font-weight: 700;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .position-points {
-            color: var(--text-secondary);
-            font-size: 14px;
-            margin-left: 4px;
-        }
-        
-        .tier-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-        
-        .tier-badge {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 12px;
-            border: 2px solid transparent;
-        }
-        
-        .tier-badge.active {
-            box-shadow: 0 0 0 2px var(--bg-color), 0 0 0 4px currentColor;
-        }
-        
-        .badge-label {
-            font-size: 10px;
-            margin-top: 2px;
-        }
-        
-        .tier-badge.ht1 {
-            color: var(--ht1-color);
-            background-color: rgba(255, 74, 74, 0.15);
-        }
-        
-        .tier-badge.ht2 {
-            color: var(--ht2-color);
-            background-color: rgba(255, 140, 74, 0.15);
-        }
-        
-        .tier-badge.ht3 {
-            color: var(--ht3-color);
-            background-color: rgba(255, 204, 74, 0.15);
-        }
-        
-        .tier-badge.lt1 {
-            color: var(--lt1-color);
-            background-color: rgba(74, 255, 98, 0.15);
-        }
-        
-        .tier-badge.lt2 {
-            color: var(--lt2-color);
-            background-color: rgba(74, 205, 255, 0.15);
-        }
-        
-        .tier-badge.inactive {
-            color: var(--text-secondary);
-            background-color: rgba(160, 160, 184, 0.1);
-            opacity: 0.5;
-        }
-        
-        .section-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-top: 12px;
-            margin-bottom: 8px;
-        }
-        
-        .retired-badges {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        
-        .retired-badge {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 12px;
-            border: 2px solid transparent;
-        }
-        
-        .retired-badge.heart {
-            color: #ff4a7c;
-            background-color: rgba(255, 74, 124, 0.15);
-        }
-        
-        .retired-badge.crown {
-            color: #9c4aff;
-            background-color: rgba(156, 74, 255, 0.15);
-        }
-        
-        .retired-badge.lightning {
-            color: #4aafff;
-            background-color: rgba(74, 175, 255, 0.15);
-        }
-        
-        .retired-badge.inactive {
-            color: var(--text-secondary);
-            background-color: rgba(160, 160, 184, 0.1);
-            opacity: 0.5;
-        }
-        
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -683,199 +405,69 @@
             <img src="https://i.ibb.co/PZBb4wLq/Zrzut-ekranu-2025-04-04-203004.png" alt="DoorPvP Kit" class="kit-image">
         </div>
     </div>
-    
-    <!-- Player Profile Modal -->
-    <div class="player-profile-overlay" id="playerProfileOverlay">
-        <div class="profile-content">
-            <div class="profile-header">
-                <button class="close-profile" id="closeProfile">×</button>
-                <div class="profile-avatar-container">
-                    <div class="profile-avatar">
-                        <img id="profileAvatar" src="" alt="Player Avatar">
-                    </div>
-                    <div class="profile-badge" id="profileBadge">
-                        <span>🏆</span> <span id="profileBadgeText">Combat Master</span>
-                    </div>
-                </div>
-                <div class="profile-name" id="profileName">Player Name</div>
-                <div class="profile-region" id="profileRegion">North America</div>
-            </div>
-            
-            <div class="profile-section">
-                <div class="section-title">POSITION</div>
-                <div class="position-card">
-                    <div class="position-number" id="positionNumber">1</div>
-                    <div class="position-label">
-                        <span>🏆</span> OVERALL <span class="position-points" id="positionPoints">(355 points)</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="profile-section">
-                <div class="section-title">TIERS</div>
-                <div class="tier-badges" id="tierBadges">
-                    <div class="tier-badge ht1 active">
-                        <span>HT1</span>
-                    </div>
-                    <div class="tier-badge ht2 active">
-                        <span>HT2</span>
-                    </div>
-                    <div class="tier-badge ht3 active">
-                        <span>HT3</span>
-                    </div>
-                    <div class="tier-badge lt1 active">
-                        <span>LT1</span>
-                    </div>
-                    <div class="tier-badge lt2">
-                        <span>HT2</span>
-                    </div>
-                </div>
-                
-                <div class="section-label">RETIRED</div>
-                <div class="retired-badges" id="retiredBadges">
-                    <div class="retired-badge heart active">
-                        <span>❤️</span>
-                        <span class="badge-label">LT1</span>
-                    </div>
-                    <div class="retired-badge crown">
-                        <span>👑</span>
-                        <span class="badge-label">LT2</span>
-                    </div>
-                    <div class="retired-badge lightning active">
-                        <span>⚡</span>
-                        <span class="badge-label">LT2</span>
-                    </div>
-                    <div class="retired-badge inactive">
-                        <span>🔥</span>
-                        <span class="badge-label">-</span>
-                    </div>
-                    <div class="retired-badge inactive">
-                        <span>💎</span>
-                        <span class="badge-label">-</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Player data with extended information
-            const playerData = {
-                "Marlowww": {
-                    region: "North America",
-                    rank: 1,
-                    points: 355,
-                    title: "Combat Master",
-                    tiers: ["HT1", "HT2", "HT3", "LT1"],
-                    retired: ["heart-LT1", "lightning-LT2"]
-                },
-                "GalleryWalk": {
-                    region: "Europe",
-                    rank: 2,
-                    points: 342,
-                    title: "Door Expert",
-                    tiers: ["HT1", "HT3", "LT1"],
-                    retired: ["heart-LT1"]
-                },
-                "Testmaster11": {
-                    region: "Europe",
-                    rank: 3,
-                    points: 335,
-                    title: "Strategist",
-                    tiers: ["HT2", "HT3", "LT1"],
-                    retired: ["lightning-LT2"]
-                },
-                "lAlekz": {
-                    region: "North America",
-                    rank: 4,
-                    points: 324,
-                    title: "Veteran",
-                    tiers: ["HT2", "LT1"],
-                    retired: ["heart-LT1", "crown-LT2"]
-                },
-                "KIBBE": {
-                    region: "Asia",
-                    rank: 5,
-                    points: 318,
-                    title: "Rising Star",
-                    tiers: ["HT1", "LT1"],
-                    retired: []
-                }
-            };
-            
-            // Default player data for players not in the list
-            const defaultPlayerData = {
-                region: "Unknown",
-                rank: 0,
-                points: 0,
-                title: "Player",
-                tiers: [],
-                retired: []
-            };
-            
             // Tier data
             const tiers = [
                 {
                     tier: "Tier 1",
                     color: "var(--tier1-color)",
-                    players: [
-                        { name: "Marlowww", isHT: true },
-                        { name: "GalleryWalk", isHT: true },
-                        { name: "Testmaster11", isHT: false },
-                        { name: "lAlekz", isHT: false },
-                        { name: "KIBBE", isHT: false }
-                    ]
+                   // players: [
+                       // { name: "Marlowww", isHT: true },
+                       // { name: "GalleryWalk", isHT: true },
+                       // { name: "Testmaster11", isHT: false },
+                       // { name: "lAlekz", isHT: false },
+                       // { name: "KIBBE", isHT: false }
+                   // ]
                 },
                 {
                     tier: "Tier 2",
                     color: "var(--tier2-color)",
-                    players: [
-                        { name: "Cowarted", isHT: true },
-                        { name: "Toltro", isHT: true },
-                        { name: "NITROOOOO", isHT: false },
-                        { name: "Legertje08", isHT: false },
-                        { name: "SharpOrganic985", isHT: false }
-                    ]
+                   // players: [
+                     //   { name: "Cowarted", isHT: true },
+                     //   { name: "Toltro", isHT: true },
+                      //  { name: "NITROOOOO", isHT: false },
+                      //  { name: "Legertje08", isHT: false },
+                      //  { name: "SharpOrganic985", isHT: false }
+                  //  ]
                 },
                 {
                     tier: "Tier 3",
                     color: "var(--tier3-color)",
                     players: [
-                        { name: "zesolution", isHT: true },
-                        { name: "bapskii", isHT: true },
-                        { name: "Scraxiee", isHT: false },
-                        { name: "shadebtm", isHT: false },
-                        { name: "FatalDose", isHT: false }
+                      //  { name: "zesolution", isHT: true },
+                      //  { name: "bapskii", isHT: true },
+                      //  { name: "Scraxiee", isHT: false },
+                      //  { name: "shadebtm", isHT: false },
+                        { name: "WojPRO1", isHT: false }
                     ]
                 },
                 {
                     tier: "Tier 4",
                     color: "var(--tier4-color)",
-                    players: [
-                        { name: "HT3KillaFanboy", isHT: true },
-                        { name: "Nxrvous", isHT: true },
-                        { name: "waistlis", isHT: false },
-                        { name: "melopp", isHT: false },
-                        { name: "5cei", isHT: false }
-                    ]
+                   // players: [
+                      //  { name: "HT3KillaFanboy", isHT: true },
+                       // { name: "Nxrvous", isHT: true },
+                       // { name: "waistlis", isHT: false },
+                       // { name: "melopp", isHT: false },
+                       // { name: "5cei", isHT: false }
+                   // ]
                 },
                 {
                     tier: "Tier 5",
                     color: "var(--tier5-color)",
-                    players: [
-                        { name: "monkey_bannana", isHT: true },
-                        { name: "qMaxy", isHT: true },
-                        { name: "BotZeruto", isHT: false },
-                        { name: "Splashy_2", isHT: false },
-                        { name: "spoconaSTOPA", isHT: false }
-                    ]
+                   // players: [
+                      //  { name: "monkey_bannana", isHT: true },
+                     //   { name: "qMaxy", isHT: true },
+                      //  { name: "BotZeruto", isHT: false },
+                     //   { name: "Splashy_2", isHT: false },
+                      //  { name: "spoconaSTOPA", isHT: false }
+                   // ]
                 }
             ];
             
             const tierContainer = document.getElementById('tier-container');
-            const playerProfileOverlay = document.getElementById('playerProfileOverlay');
-            const closeProfile = document.getElementById('closeProfile');
             
             // Create tier columns with animation delay
             tiers.forEach((tierData, index) => {
@@ -913,160 +505,100 @@
                         // Fallback if image loading fails
                         this.src = `https://minotar.net/helm/MHF_Steve/32.png`;
                     };
-playerAvatar.appendChild(avatarImg);
                     
-const playerName = document.createElement('div');
-playerName.className = 'player-name';
-playerName.textContent = player.name;
+                    playerAvatar.appendChild(avatarImg);
+                    tierPlayer.appendChild(playerAvatar);
                     
-const playerRank = document.createElement('div');
-playerRank.className = 'player-rank';
-if (player.isHT) {
-    playerRank.innerHTML = `HT <span class="rank-arrow">▲</span>`;
-} else {
-    playerRank.innerHTML = `LT <span class="rank-arrow">▼</span>`;
-}
+                    const playerName = document.createElement('div');
+                    playerName.className = 'player-name';
+                    playerName.textContent = player.name;
+                    tierPlayer.appendChild(playerName);
                     
-tierPlayer.appendChild(playerAvatar);
-tierPlayer.appendChild(playerName);
-tierPlayer.appendChild(playerRank);
+                    const playerRank = document.createElement('div');
+                    playerRank.className = player.isHT ? 'player-rank double-arrow' : 'player-rank';
                     
-// Add click event to show player profile
-tierPlayer.addEventListener('click', () => {
-    showPlayerProfile(player.name);
-});
+                    if (player.isHT) {
+                        playerRank.innerHTML = `<span class="rank-arrow">▲</span><span class="rank-arrow">▲</span>`;
+                    } else {
+                        playerRank.innerHTML = `<span class="rank-arrow">▲</span>`;
+                    }
                     
-playersContainer.appendChild(tierPlayer);
-});
+                    tierPlayer.appendChild(playerRank);
+                    playersContainer.appendChild(tierPlayer);
+                });
                 
-tierColumn.appendChild(playersContainer);
-tierContainer.appendChild(tierColumn);
+                tierColumn.appendChild(playersContainer);
+                tierContainer.appendChild(tierColumn);
                 
-// Add click event for collapsing/expanding
-tierHeader.addEventListener('click', () => {
-    tierColumn.classList.toggle('collapsed');
-});
-});
+                // Add collapsible functionality
+                tierHeader.addEventListener('click', () => {
+                    tierColumn.classList.toggle('collapsed');
+                });
+            });
             
-// Setup search functionality
-const searchInput = document.querySelector('.search-input');
-searchInput.addEventListener('input', function() {
-    const searchTerm = this.value.toLowerCase().trim();
-    const playerElements = document.querySelectorAll('.tier-player');
-    const tierColumns = document.querySelectorAll('.tier-column');
-                
-    playerElements.forEach(player => {
-        const playerName = player.dataset.name;
-        if (playerName.includes(searchTerm)) {
-            player.style.display = 'flex';
-        } else {
-            player.style.display = 'none';
-        }
-    });
-                
-    // Check if tier columns should be hidden
-    tierColumns.forEach(column => {
-        const visiblePlayers = column.querySelectorAll('.tier-player[style="display: flex;"]');
-        if (visiblePlayers.length === 0) {
-            column.classList.add('empty');
-        } else {
-            column.classList.remove('empty');
-        }
-    });
-});
+            // Show kit button functionality
+            const showKitButton = document.getElementById('showKit');
+            const kitOverlay = document.getElementById('kitOverlay');
+            const closeKit = document.getElementById('closeKit');
             
-// Kit overlay functionality
-const showKitButton = document.getElementById('showKit');
-const kitOverlay = document.getElementById('kitOverlay');
-const closeKit = document.getElementById('closeKit');
+            showKitButton.addEventListener('click', function() {
+                kitOverlay.classList.add('active');
+            });
             
-showKitButton.addEventListener('click', () => {
-    kitOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-});
+            closeKit.addEventListener('click', function() {
+                kitOverlay.classList.remove('active');
+            });
             
-closeKit.addEventListener('click', () => {
-    kitOverlay.classList.remove('active');
-    document.body.style.overflow = '';
-});
+            // Close kit when clicking outside
+            kitOverlay.addEventListener('click', function(e) {
+                if (e.target === kitOverlay) {
+                    kitOverlay.classList.remove('active');
+                }
+            });
             
-// Close kit overlay on background click
-kitOverlay.addEventListener('click', (e) => {
-    if (e.target === kitOverlay) {
-        kitOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-});
-            
-// Player profile functionality
-function showPlayerProfile(playerName) {
-    // Get player data or use default
-    const player = playerData[playerName] || defaultPlayerData;
+            // Improved search functionality
+            const searchInput = document.querySelector('.search-input');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                let visiblePlayers = 0;
                 
-    // Update profile content
-    document.getElementById('profileName').textContent = playerName;
-    document.getElementById('profileRegion').textContent = player.region;
-    document.getElementById('profileAvatar').src = `https://minotar.net/helm/${playerName}/120.png`;
-    document.getElementById('profileBadgeText').textContent = player.title;
-    document.getElementById('positionNumber').textContent = player.rank || '?';
-    document.getElementById('positionPoints').textContent = `(${player.points} points)`;
+                // Get all tier columns
+                const tierColumns = document.querySelectorAll('.tier-column');
                 
-    // Update tier badges
-    const tierBadges = document.getElementById('tierBadges');
-    tierBadges.innerHTML = '';
+                tierColumns.forEach(column => {
+                    let columnHasVisiblePlayers = false;
+                    const players = column.querySelectorAll('.tier-player');
+                    
+                    players.forEach(player => {
+                        const playerName = player.dataset.name;
+                        if (playerName.includes(searchTerm)) {
+                            player.style.display = 'flex';
+                            columnHasVisiblePlayers = true;
+                            visiblePlayers++;
+                        } else {
+                            player.style.display = 'none';
+                        }
+                    });
+                    
+                    // Show/hide entire tier column based on if it has visible players
+                    if (columnHasVisiblePlayers) {
+                        column.classList.remove('empty');
+                    } else {
+                        column.classList.add('empty');
+                    }
+                });
                 
-    // Create badges for HT1, HT2, HT3, LT1, LT2
-    const allTiers = ['HT1', 'HT2', 'HT3', 'LT1', 'LT2'];
-    allTiers.forEach(tier => {
-        const badge = document.createElement('div');
-        badge.className = `tier-badge ${tier.toLowerCase()} ${player.tiers.includes(tier) ? 'active' : ''}`;
-        badge.innerHTML = `<span>${tier}</span>`;
-        tierBadges.appendChild(badge);
-    });
-                
-    // Update retired badges
-    const retiredBadges = document.getElementById('retiredBadges');
-    retiredBadges.innerHTML = '';
-                
-    // Create retired badges
-    const retiredTypes = [
-        { type: 'heart', icon: '❤️', label: 'LT1' },
-        { type: 'crown', icon: '👑', label: 'LT2' },
-        { type: 'lightning', icon: '⚡', label: 'LT2' },
-        { type: 'fire', icon: '🔥', label: '-' },
-        { type: 'diamond', icon: '💎', label: '-' }
-    ];
-                
-    retiredTypes.forEach(badge => {
-        const isActive = player.retired.includes(`${badge.type}-${badge.label}`);
-        const badgeElement = document.createElement('div');
-        badgeElement.className = `retired-badge ${badge.type} ${isActive ? 'active' : 'inactive'}`;
-        badgeElement.innerHTML = `
-            <span>${badge.icon}</span>
-            <span class="badge-label">${badge.label}</span>
-        `;
-        retiredBadges.appendChild(badgeElement);
-    });
-                
-    // Show the profile overlay
-    playerProfileOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-            
-// Close profile overlay
-closeProfile.addEventListener('click', () => {
-    playerProfileOverlay.classList.remove('active');
-    document.body.style.overflow = '';
-});
-            
-// Close profile overlay on background click
-playerProfileOverlay.addEventListener('click', (e) => {
-    if (e.target === playerProfileOverlay) {
-        playerProfileOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-});
-});
-</script>
+                if (searchTerm === '') {
+                    tierColumns.forEach(column => {
+                        column.classList.remove('empty');
+                        const players = column.querySelectorAll('.tier-player');
+                        players.forEach(player => {
+                            player.style.display = 'flex';
+                        });
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
