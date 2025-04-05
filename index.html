@@ -404,41 +404,43 @@
             <img src="https://i.ibb.co/PZBb4wLq/Zrzut-ekranu-2025-04-04-203004.png" alt="DoorPvP Kit" class="kit-image">
         </div>
     </div>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+// Supabase setup
+const supabaseUrl = 'https://yhboidvqgqsulbqumili.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InloYm9pZHZxZ3FzdWxicXVtaWxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTYzNzMsImV4cCI6MjA1OTM3MjM3M30.oZrPuyYdMzUuIWXwbqiFNk7qjzBz4Eq4MGULQOZMp1U';
+const supabase1 = createClient(supabaseUrl, supabaseKey);
+
+// Fetch players for DoorPvP
+const { data: players, error } = await supabase1
+  .from('tiers')
+  .select('*')
+  .eq('gamemode', 'doorpvp')
+  .order('tier', { ascending: true });
+
+if (error) {
+  console.error('Error fetching data:', error);
+} else {
+  console.log(players); // Now you have the data, inject it into the DOM
+  // You can adapt your `tiers` array dynamically from here
+}
+</script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Tier data
-            const tiers = [
-                {
-                    tier: "Tier 1",
-                    color: "var(--tier1-color)",
-                    players: []
-                },
-                {
-                    tier: "Tier 2",
-                    color: "var(--tier2-color)",
-                    players: []
-                },
-                {
-                    tier: "Tier 3",
-                    color: "var(--tier3-color)",
-                    players: [
-                        { name: "Axillity", isHT: true },
-                        { name: "Bokshaq", isHT: false },
-                        { name: "WojPRO1", isHT: false }
-                    ]
-                },
-                {
-                    tier: "Tier 4",
-                    color: "var(--tier4-color)",
-                    players: []
-                },
-                {
-                    tier: "Tier 5",
-                    color: "var(--tier5-color)",
-                    players: []
-                }
-            ];
+            const tiers = [1, 2, 3, 4, 5].map(tierNum => ({
+                tier: `Tier ${tierNum}`,
+                color: `var(--tier${tierNum}-color)`,
+                players: players
+                    .filter(p => p.tier === tierNum)
+                    .map(p => ({
+                        name: p.player_name,
+                        isHT: p.is_ht
+                    }))
+            }));
+
             
             const tierContainer = document.getElementById('tier-container');
             
