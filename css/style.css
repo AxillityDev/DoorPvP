@@ -1,50 +1,175 @@
+/* Global Styles */
 body {
-  font-family: Arial, sans-serif;
-  background: #121212;
-  color: #f4f4f4;
+  font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
-}
-
-header {
-  text-align: center;
-  padding: 20px;
-  background: #1e1e1e;
-}
-
-input#search-bar {
-  margin-top: 10px;
-  padding: 10px;
-  width: 50%;
-  border: 1px solid #333;
-  border-radius: 5px;
-  background: #2e2e2e;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a2e);
   color: #f4f4f4;
+  overflow-x: hidden;
 }
 
-main {
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 80px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  margin: 20px auto;
+  max-width: 90%;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+  color: #ffffff;
+  text-transform: uppercase;
+  animation: slide-in 1s ease-out;
+}
+
+.hero .subtitle {
+  font-size: 1.2em;
+  color: #dddddd;
+  margin-bottom: 30px;
+}
+
+.search-container {
+  position: relative;
+  display: inline-block;
+  width: 80%;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  font-size: 1em;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+  outline: none;
+  transform: scale(1.05);
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #1e1e2f;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  display: none;
+}
+
+.suggestions.active {
+  display: block;
+}
+
+/* Player Cards */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
   padding: 20px;
 }
 
-ul#player-list {
-  list-style: none;
-  padding: 0;
+.player-card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(8px);
+  border-radius: 15px;
+  text-align: center;
+  padding: 15px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-ul#player-list li {
-  display: flex;
-  align-items: center;
-  background: #1e1e1e;
-  margin: 10px 0;
+.player-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.player-card img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.player-card span {
+  display: block;
+  font-size: 1.2em;
+  color: #ffffff;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 15px;
+  color: #cccccc;
+}
+
+/* Animations */
+@keyframes slide-in {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+/* Table Styles */
+table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+thead {
+  background: #4e54c8;
+  color: #fff;
+}
+
+thead th {
+  padding: 10px;
+  cursor: pointer;
+  text-align: left;
+}
+
+tbody tr {
+  border-bottom: 1px solid #ccc;
+  transition: background 0.3s ease;
+}
+
+tbody tr:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+td {
+  padding: 10px;
+  color: #fff;
+
+/* Filter Dropdown */
+.filter-container {
+  text-align: center;
+  margin: 20px;
+}
+
+#tier-filter {
   padding: 10px;
   border-radius: 5px;
+  border: none;
+  font-size: 1em;
 }
-
-ul#player-list li img {
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-ul#player-list li span {
-  font-size: 18px;
-}
+  
