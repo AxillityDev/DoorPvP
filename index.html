@@ -13,6 +13,13 @@
             --text-secondary: #a0a0b8;
             --border-color: #2a2a38;
             --hover-bg: #252533;
+            
+            /* Tier colors */
+            --tier1-color: #ff7f7f;
+            --tier2-color: #ffbf7f;
+            --tier3-color: #ffdf7f;
+            --tier4-color: #7fff7f;
+            --tier5-color: #7fbfff;
         }
 
         * {
@@ -77,6 +84,16 @@
             background-color: var(--hover-bg);
         }
         
+        .discord-btn {
+            background-color: #5865F2;
+            color: white !important;
+            font-weight: 600;
+        }
+        
+        .discord-btn:hover {
+            background-color: #4752c4 !important;
+        }
+        
         .search-container {
             position: relative;
         }
@@ -130,10 +147,10 @@
         }
         
         .main-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 20px;
-            padding: 0 40px 40px;
+            padding: 0 40px 100px;
         }
         
         .tier-column {
@@ -150,17 +167,42 @@
         }
         
         .tier-header {
-            background-color: var(--hover-bg);
             padding: 14px;
-            text-align: center;
+            text-align: left;
             font-weight: 700;
             font-size: 16px;
             color: var(--text-color);
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
+            justify-content: space-between;
             border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .tier-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tier-header-icon {
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+        
+        .collapsed .tier-header-icon {
+            transform: rotate(-90deg);
+        }
+        
+        .tier-players {
+            max-height: 1000px;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .collapsed .tier-players {
+            max-height: 0;
         }
         
         .tier-player {
@@ -184,15 +226,21 @@
             width: 28px;
             height: 28px;
             margin-right: 12px;
-            background-color: var(--hover-bg);
-            border-radius: 6px;
+            border-radius: 4px;
             overflow: hidden;
+            image-rendering: pixelated;
         }
         
         .player-name {
             flex-grow: 1;
             font-size: 14px;
             font-weight: 500;
+        }
+        
+        .player-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
         }
         
         .player-rank {
@@ -208,6 +256,26 @@
         
         .double-arrow .rank-arrow {
             color: #ffcc00;
+        }
+        
+        .edit-btn {
+            visibility: hidden;
+            background-color: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.2s ease;
+        }
+        
+        .tier-player:hover .edit-btn {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .edit-btn:hover {
+            color: var(--text-color);
         }
         
         .show-kit-button {
@@ -226,11 +294,214 @@
             border: none;
             box-shadow: 0 4px 12px rgba(93, 74, 255, 0.3);
             transition: all 0.2s ease;
+            z-index: 900;
         }
         
         .show-kit-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(93, 74, 255, 0.4);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 80%;
+            max-height: 80%;
+            overflow: auto;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: var(--text-secondary);
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .kit-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .admin-panel-content {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            width: 500px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            position: relative;
+        }
+        
+        .admin-panel-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--accent-color);
+        }
+        
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .admin-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .admin-form label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .admin-form input, .admin-form select {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--hover-bg);
+            color: var(--text-color);
+        }
+        
+        .admin-form input:focus, .admin-form select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        
+        .admin-form-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .admin-form-buttons button {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        
+        .admin-form-buttons .cancel-btn {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        
+        .admin-form-buttons .cancel-btn:hover {
+            background-color: var(--hover-bg);
+            color: var(--text-color);
+        }
+        
+        .admin-form-buttons .save-btn {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .admin-form-buttons .save-btn:hover {
+            background-color: #4e3dd3;
+        }
+        
+        .admin-login {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .admin-login-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .admin-login-text {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .discord-login-btn {
+            background-color: #5865F2;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+        
+        .discord-login-btn:hover {
+            background-color: #4752c4;
+        }
+        
+        /* Tier specific colors */
+        .tier-1 .tier-header {
+            background-color: var(--tier1-color);
+            color: #000;
+        }
+        
+        .tier-2 .tier-header {
+            background-color: var(--tier2-color);
+            color: #000;
+        }
+        
+        .tier-3 .tier-header {
+            background-color: var(--tier3-color);
+            color: #000;
+        }
+        
+        .tier-4 .tier-header {
+            background-color: var(--tier4-color);
+            color: #000;
+        }
+        
+        .tier-5 .tier-header {
+            background-color: var(--tier5-color);
+            color: #000;
         }
     </style>
 </head>
@@ -239,8 +510,8 @@
         <div class="logo">MC<span>TIERS</span></div>
         <div class="navigation">
             <a href="#"><span>🏠</span> Strona Główna</a>
-            <a href="#"><span>🏆</span> Rankingi</a>
-            <a href="#"><span>💬</span> Discord</a>
+            <a href="#" class="discord-btn"><span>💬</span> Discord</a>
+            <a href="#" id="admin-btn"><span>⚙️</span> Admin</a>
         </div>
         <div class="search-container">
             <span class="search-icon">🔍</span>
@@ -257,9 +528,68 @@
         <!-- Tier columns will be generated by JavaScript -->
     </div>
     
-    <button class="show-kit-button">
+    <button class="show-kit-button" id="show-kit-btn">
         <span>👁️</span> POKAŻ ZESTAW
     </button>
+    
+    <!-- Kit Modal -->
+    <div class="modal" id="kit-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-kit-modal">&times;</button>
+            <img src="/api/placeholder/800/600" alt="Kit" class="kit-image" id="kit-image">
+        </div>
+    </div>
+    
+    <!-- Admin Panel Modal -->
+    <div class="admin-panel" id="admin-panel">
+        <div class="admin-panel-content">
+            <button class="close-modal" id="close-admin-panel">&times;</button>
+            
+            <div id="admin-login-screen">
+                <div class="admin-login">
+                    <h3 class="admin-login-title">Panel Administratora</h3>
+                    <p class="admin-login-text">Zaloguj się przez Discord aby uzyskać dostęp do panelu administracyjnego.</p>
+                    <button class="discord-login-btn" id="discord-login-btn">
+                        <span>💬</span> Zaloguj przez Discord
+                    </button>
+                </div>
+            </div>
+            
+            <div id="admin-edit-screen" style="display: none;">
+                <h3 class="admin-panel-title">Edycja Gracza</h3>
+                <form class="admin-form" id="edit-player-form">
+                    <div class="admin-form-group">
+                        <label for="player-name">Nazwa Gracza</label>
+                        <input type="text" id="player-name" name="player-name" required>
+                    </div>
+                    
+                    <div class="admin-form-group">
+                        <label for="player-tier">Tier</label>
+                        <select id="player-tier" name="player-tier">
+                            <option value="1">Tier 1</option>
+                            <option value="2">Tier 2</option>
+                            <option value="3">Tier 3</option>
+                            <option value="4">Tier 4</option>
+                            <option value="5">Tier 5</option>
+                        </select>
+                    </div>
+                    
+                    <div class="admin-form-group">
+                        <label for="player-rank">Ranga</label>
+                        <select id="player-rank" name="player-rank">
+                            <option value="ht">HT (dwie strzałki)</option>
+                            <option value="lt">LT (jedna strzałka)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="admin-form-buttons">
+                        <button type="button" class="cancel-btn" id="cancel-edit-btn">Anuluj</button>
+                        <button type="submit" class="save-btn">Zapisz</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -318,29 +648,49 @@
             ];
             
             const tierContainer = document.getElementById('tier-container');
+            let isAdmin = false;
+            let currentEditPlayer = null;
             
             // Create tier columns
-            tiers.forEach(tierData => {
+            tiers.forEach((tierData, index) => {
+                const tierNumber = index + 1;
                 const tierColumn = document.createElement('div');
-                tierColumn.className = 'tier-column';
+                tierColumn.className = `tier-column tier-${tierNumber}`;
                 
                 const tierHeader = document.createElement('div');
                 tierHeader.className = 'tier-header';
-                tierHeader.innerHTML = `<span class="trophy">🏆</span> ${tierData.tier}`;
+                tierHeader.innerHTML = `
+                    <div class="tier-header-left">
+                        <span class="tier-header-icon">▼</span>
+                        <span class="trophy">🏆</span> ${tierData.tier}
+                    </div>
+                    <span class="player-count">${tierData.players.length} graczy</span>
+                `;
                 tierColumn.appendChild(tierHeader);
+                
+                const tierPlayers = document.createElement('div');
+                tierPlayers.className = 'tier-players';
                 
                 tierData.players.forEach(player => {
                     const tierPlayer = document.createElement('div');
                     tierPlayer.className = 'tier-player';
+                    tierPlayer.dataset.player = player.name;
+                    tierPlayer.dataset.tier = tierNumber;
+                    tierPlayer.dataset.isht = player.isHT;
                     
                     const playerAvatar = document.createElement('div');
                     playerAvatar.className = 'player-avatar';
+                    // Use Minecraft avatar API
+                    playerAvatar.innerHTML = `<img src="https://mc-heads.net/avatar/${player.name}/28" alt="${player.name}" width="28" height="28">`;
                     tierPlayer.appendChild(playerAvatar);
                     
                     const playerName = document.createElement('div');
                     playerName.className = 'player-name';
                     playerName.textContent = player.name;
                     tierPlayer.appendChild(playerName);
+                    
+                    const playerControls = document.createElement('div');
+                    playerControls.className = 'player-controls';
                     
                     const playerRank = document.createElement('div');
                     playerRank.className = player.isHT ? 'player-rank double-arrow' : 'player-rank';
@@ -353,19 +703,175 @@
                         playerRank.innerHTML = `<span class="rank-arrow">▲</span>`;
                     }
                     
-                    tierPlayer.appendChild(playerRank);
-                    tierColumn.appendChild(tierPlayer);
+                    playerControls.appendChild(playerRank);
+                    
+                    const editBtn = document.createElement('button');
+                    editBtn.className = 'edit-btn';
+                    editBtn.innerHTML = '✏️';
+                    editBtn.addEventListener('click', function() {
+                        editPlayer(player.name, tierNumber, player.isHT);
+                    });
+                    
+                    playerControls.appendChild(editBtn);
+                    tierPlayer.appendChild(playerControls);
+                    tierPlayers.appendChild(tierPlayer);
                 });
                 
+                tierColumn.appendChild(tierPlayers);
                 tierContainer.appendChild(tierColumn);
+                
+                // Add click event to toggle collapse
+                tierHeader.addEventListener('click', function() {
+                    tierColumn.classList.toggle('collapsed');
+                });
+            });
+            
+            // Discord button
+            const discordBtn = document.querySelector('.discord-btn');
+            discordBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.open('https://discord.gg/uyaaBcvddr', '_blank');
             });
             
             // Show kit button functionality
-            const showKitButton = document.querySelector('.show-kit-button');
-            showKitButton.addEventListener('click', function() {
-                alert('Funkcja pokazywania zestawu nie jest jeszcze dostępna!');
+            const showKitBtn = document.getElementById('show-kit-btn');
+            const kitModal = document.getElementById('kit-modal');
+            const closeKitModal = document.getElementById('close-kit-modal');
+            const kitImage = document.getElementById('kit-image');
+            
+            showKitBtn.addEventListener('click', function() {
+                kitImage.src = "https://media.discordapp.net/attachments/1357784250853621871/1357784264338571435/Zrzut_ekranu_2025-04-04_203004.png";
+                kitModal.style.display = 'flex';
             });
-        });
-    </script>
-</body>
-</html>
+            
+            closeKitModal.addEventListener('click', function() {
+                kitModal.style.display = 'none';
+            });
+            
+            // Admin panel functionality
+            const adminBtn = document.getElementById('admin-btn');
+            const adminPanel = document.getElementById('admin-panel');
+            const closeAdminPanel = document.getElementById('close-admin-panel');
+            const discordLoginBtn = document.getElementById('discord-login-btn');
+            const adminLoginScreen = document.getElementById('admin-login-screen');
+            const adminEditScreen = document.getElementById('admin-edit-screen');
+            const editPlayerForm = document.getElementById('edit-player-form');
+            const cancelEditBtn = document.getElementById('cancel-edit-btn');
+            
+            adminBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                adminPanel.style.display = 'flex';
+            });
+            
+            closeAdminPanel.addEventListener('click', function() {
+                adminPanel.style.display = 'none';
+            });
+            
+            discordLoginBtn.addEventListener('click', function() {
+                // Simulate Discord login (in real implementation this would redirect to Discord OAuth)
+                simulateDiscordLogin();
+            });
+            
+            cancelEditBtn.addEventListener('click', function() {
+                adminPanel.style.display = 'none';
+            });
+            
+            editPlayerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (!currentEditPlayer) return;
+                
+                const newName = document.getElementById('player-name').value;
+                const newTier = document.getElementById('player-tier').value;
+                const newRank = document.getElementById('player-rank').value === 'ht';
+                
+                // Update player in UI (in real implementation this would update the database)
+                updatePlayerUI(currentEditPlayer, newName, parseInt(newTier), newRank);
+                
+                adminPanel.style.display = 'none';
+            });
+            
+            function simulateDiscordLogin() {
+                // In a real application, this would be an actual Discord OAuth flow
+                setTimeout(() => {
+                    isAdmin = true;
+                    document.querySelectorAll('.edit-btn').forEach(btn => {
+                        btn.style.visibility = 'visible';
+                    });
+                    
+                    // Show admin options
+                    adminLoginScreen.style.display = 'none';
+                    adminEditScreen.style.display = 'block';
+                }, 500);
+            }
+            
+            function editPlayer(playerName, tierNumber, isHT) {
+                if (!isAdmin) {
+                    adminLoginScreen.style.display = 'block';
+                    adminEditScreen.style.display = 'none';
+                    adminPanel.style.display = 'flex';
+                    return;
+                }
+                
+                currentEditPlayer = playerName;
+                
+                // Set form values
+                document.getElementById('player-name').value = playerName;
+                document.getElementById('player-tier').value = tierNumber;
+                document.getElementById('player-rank').value = isHT ? 'ht' : 'lt';
+                
+                adminLoginScreen.style.display = 'none';
+                adminEditScreen.style.display = 'block';
+                adminPanel.style.display = 'flex';
+            }
+            
+            function updatePlayerUI(oldName, newName, newTier, isHT) {
+                // Remove player from current location
+                const playerElement = document.querySelector(`.tier-player[data-player="${oldName}"]`);
+                if (!playerElement) return;
+                
+                const oldTier = parseInt(playerElement.dataset.tier);
+                
+                // If tier changed, move player to new tier
+                if (oldTier !== newTier) {
+                    // Remove from old tier
+                    playerElement.remove();
+                    
+                    // Create in new tier
+                    const newTierPlayers = document.querySelector(`.tier-${newTier} .tier-players`);
+                    
+                    const newPlayerElement = document.createElement('div');
+                    newPlayerElement.className = 'tier-player';
+                    newPlayerElement.dataset.player = newName;
+                    newPlayerElement.dataset.tier = newTier;
+                    newPlayerElement.dataset.isht = isHT;
+                    
+                    newPlayerElement.innerHTML = `
+                        <div class="player-avatar">
+                            <img src="https://mc-heads.net/avatar/${newName}/28" alt="${newName}" width="28" height="28">
+                        </div>
+                        <div class="player-name">${newName}</div>
+                        <div class="player-controls">
+                            <div class="player-rank ${isHT ? 'double-arrow' : ''}">
+                                ${isHT ? '<span class="rank-arrow">▲</span><span class="rank-arrow">▲</span>' : '<span class="rank-arrow">▲</span>'}
+                            </div>
+                            <button class="edit-btn">✏️</button>
+                        </div>
+                    `;
+                    
+                    newTierPlayers.appendChild(newPlayerElement);
+                    
+                    // Add edit event listener
+                    newPlayerElement.querySelector('.edit-btn').addEventListener('click', function() {
+                        editPlayer(newName, newTier, isHT);
+                    });
+                    
+                    // Update player counts
+                    updatePlayerCounts();
+                } else {
+                    // Just update name and rank
+                    const playerNameElement = playerElement.querySelector('.player-name');
+                    const playerRankElement = playerElement.querySelector('.player-rank');
+                    const playerAvatarImg = playerElement.querySelector('.player-avatar img');
+                    
+                    playerNameElement.textContent = newName;
+                    player
