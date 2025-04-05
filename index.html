@@ -408,38 +408,49 @@
 
 
     <script>
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+            import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-const supabaseUrl = 'https://yhboidvqgqsulbqumili.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InloYm9pZHZxZ3FzdWxicXVtaWxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTYzNzMsImV4cCI6MjA1OTM3MjM3M30.oZrPuyYdMzUuIWXwbqiFNk7qjzBz4Eq4MGULQOZMp1U';
-const supabase1 = createClient(supabaseUrl, supabaseKey);
+            const supabaseUrl = 'https://yhboidvqgqsulbqumili.supabase.co';
+            const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InloYm9pZHZxZ3FzdWxicXVtaWxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTYzNzMsImV4cCI6MjA1OTM3MjM3M30.oZrPuyYdMzUuIWXwbqiFNk7qjzBz4Eq4MGULQOZMp1U';
+            const supabase1 = createClient(supabaseUrl, supabaseKey);
 
-document.addEventListener('DOMContentLoaded', async () => {
-  // Fetch players (no gamemode filtering for now)
-  const { data: players, error } = await supabase1
-    .from('tiers')
-    .select('*')
-    .order('tier', { ascending: true });
+            document.addEventListener('DOMContentLoaded', async () => {
+              const { data: players, error } = await supabase1
+                .from('tiers')
+                .select('*'); // Only works if the 'tier' column exists
 
-  if (error) {
-    console.error('Error fetching data:', error);
-    return;
-  }
+              if (error) {
+                console.error('Error fetching data:', error);
+                return;
+              }
 
-  // Group players by tier
-  const tiers = [1, 2, 3, 4, 5].map(tierNum => ({
-    tier: `Tier ${tierNum}`,
-    color: `var(--tier${tierNum}-color)`,
-    players: players
-      .filter(p => p.tier === tierNum)
-      .map(p => ({
-        name: p.player_name,
-        isHT: p.is_ht
-      }))
-  }));
+              const tiers = [1, 2, 3, 4, 5].map(tierNum => ({
+                tier: `Tier ${tierNum}`,
+                color: `var(--tier${tierNum}-color)`,
+                players: players
+                  .filter(p => p.tier === tierNum)
+                  .map(p => ({
+                    name: p.player_name,
+                    isHT: p.is_ht
+                  }))
+              }));
 
-  const tierContainer = document.getElementById('tier-container');
-});
+  // ✅ use tiers inside the same block
+              const tierContainer = document.getElementById('tier-container');
+              tiers.forEach(t => {
+                const block = document.createElement('div');
+                block.innerHTML = `
+                  <h2 style="color: ${t.color}">${t.tier}</h2>
+                  <ul>
+                    ${t.players.map(p => `<li>${p.name} ${p.isHT ? '(HT)' : '(LT)'}</li>`).join('')}
+                  </ul>
+                `;
+                tierContainer.appendChild(block);
+              });
+            });
+
+
+              const tierContainer = document.getElementById('tier-container');
             // Create tier columns with animation delay
             tiers.forEach((tierData, index) => {
                 const tierColumn = document.createElement('div');
