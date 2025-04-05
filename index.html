@@ -408,7 +408,32 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
 const supabaseUrl = 'https://yhboidvqgqsulbqumili.supabase.co';
-const supabaseKey = 'your_anon_key';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InloYm9pZHZxZ3FzdWxicXVtaWxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTYzNzMsImV4cCI6MjA1OTM3MjM3M30.oZrPuyYdMzUuIWXwbqiFNk7qjzBz4Eq4MGULQOZMp1U';
+const supabase1 = createClient(supabaseUrl, supabaseKey);
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // Fetch players (no gamemode filtering for now)
+  const { data: players, error } = await supabase1
+    .from('tiers')
+    .select('*')
+    .order('tier', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching data:', error);
+    return;
+  }
+
+  // Group players by tier
+  const tiers = [1, 2, 3, 4, 5].map(tierNum => ({
+    tier: `Tier ${tierNum}`,
+    color: `var(--tier${tierNum}-color)`,
+    players: players
+      .filter(p => p.tier === tierNum)
+      .map(p => ({
+        name: p.player_name,
+        isHT: p.is_ht
+      }))
+  }));
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Static tier structure
