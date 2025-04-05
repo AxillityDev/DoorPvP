@@ -196,13 +196,13 @@
         }
         
         .tier-players {
-            transition: max-height 0.4s ease;
-            max-height: 500px;
+            max-height: 500px; /* Fixed value for expanded state */
             overflow: hidden;
+            transition: max-height 0.4s ease;
         }
         
         .collapsed .tier-players {
-            max-height: 0;
+            max-height: 0; /* No height when collapsed */
         }
         
         .tier-player {
@@ -280,31 +280,6 @@
             box-shadow: 0 6px 16px rgba(93, 74, 255, 0.4);
         }
         
-        .discord-button {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            background-color: #5865F2;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            border: none;
-            box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3);
-            transition: all 0.2s ease;
-            text-decoration: none;
-            z-index: 100;
-        }
-        
-        .discord-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(88, 101, 242, 0.4);
-        }
-        
         .kit-overlay {
             position: fixed;
             top: 0;
@@ -362,21 +337,10 @@
             padding: 4px;
         }
         
-        .kit-grid {
-            display: grid;
-            grid-template-columns: repeat(9, 1fr);
-            gap: 4px;
-        }
-        
-        .kit-slot {
-            background-color: var(--hover-bg);
-            aspect-ratio: 1;
-            border-radius: 4px;
+        .kit-image {
+            width: 100%;
+            border-radius: 8px;
             border: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
         }
         
         @keyframes fadeIn {
@@ -393,6 +357,11 @@
                 opacity: 1;
                 transform: translateY(0);
             }
+        }
+        
+        /* Fix for empty tier columns when all players are filtered out */
+        .tier-column.empty {
+            display: none;
         }
     </style>
 </head>
@@ -423,27 +392,13 @@
         <span>⚔️</span> POKAŻ ZESTAW
     </button>
     
-    <a href="https://discord.gg/uyaaBcvddr" target="_blank" class="discord-button">
-        <span>👋</span> DOŁĄCZ DO NAS
-    </a>
-    
     <div class="kit-overlay" id="kitOverlay">
         <div class="kit-content">
             <div class="kit-header">
                 <div class="kit-title">Podstawowy Zestaw DoorPvP</div>
                 <button class="close-kit" id="closeKit">×</button>
             </div>
-            <div class="kit-grid">
-                <div class="kit-slot">🗡️</div>
-                <div class="kit-slot">🪓</div>
-                <div class="kit-slot">🚪</div>
-                <div class="kit-slot">🍎</div>
-                <div class="kit-slot">🧪</div>
-                <div class="kit-slot">🧪</div>
-                <div class="kit-slot">🥊</div>
-                <div class="kit-slot">🏹</div>
-                <div class="kit-slot">🔋</div>
-            </div>
+            <img src="https://i.ibb.co/KjCQ7FP/Zrzut-ekranu-2025-04-04-203004.png" alt="DoorPvP Kit" class="kit-image">
         </div>
     </div>
 
@@ -514,6 +469,7 @@
             tiers.forEach((tierData, index) => {
                 const tierColumn = document.createElement('div');
                 tierColumn.className = 'tier-column';
+                tierColumn.dataset.tier = tierData.tier.toLowerCase().replace(/\s/g, '-');
                 tierColumn.style.animationDelay = `${index * 0.1}s`;
                 
                 const tierHeader = document.createElement('div');
@@ -531,6 +487,7 @@
                 tierData.players.forEach(player => {
                     const tierPlayer = document.createElement('div');
                     tierPlayer.className = 'tier-player';
+                    tierPlayer.dataset.name = player.name.toLowerCase();
                     
                     const playerAvatar = document.createElement('div');
                     playerAvatar.className = 'player-avatar';
@@ -584,19 +541,48 @@
                 }
             });
             
-            // Search functionality
+            // Improved search functionality
             const searchInput = document.querySelector('.search-input');
             searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
+                const searchTerm = this.value.toLowerCase().trim();
+                let visiblePlayers = 0;
                 
-                document.querySelectorAll('.tier-player').forEach(player => {
-                    const playerName = player.querySelector('.player-name').textContent.toLowerCase();
-                    if (playerName.includes(searchTerm)) {
-                        player.style.display = 'flex';
+                // Get all tier columns
+                const tierColumns = document.querySelectorAll('.tier-column');
+                
+                tierColumns.forEach(column => {
+                    let columnHasVisiblePlayers = false;
+                    const players = column.querySelectorAll('.tier-player');
+                    
+                    players.forEach(player => {
+                        const playerName = player.dataset.name;
+                        if (playerName.includes(searchTerm)) {
+                            player.style.display = 'flex';
+                            columnHasVisiblePlayers = true;
+                            visiblePlayers++;
+                        } else {
+                            player.style.display = 'none';
+                        }
+                    });
+                    
+                    // Show/hide entire tier column based on if it has visible players
+                    if (columnHasVisiblePlayers) {
+                        column.classList.remove('empty');
                     } else {
-                        player.style.display = 'none';
+                        column.classList.add('empty');
                     }
                 });
+                
+                // If no search term, make sure all columns are visible
+                if (searchTerm === '') {
+                    tierColumns.forEach(column => {
+                        column.classList.remove('empty');
+                        const players = column.querySelectorAll('.tier-player');
+                        players.forEach(player => {
+                            player.style.display = 'flex';
+                        });
+                    });
+                }
             });
         });
     </script>
