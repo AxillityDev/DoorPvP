@@ -409,11 +409,11 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
 const supabaseUrl = 'https://yhboidvqgqsulbqumili.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InloYm9pZHZxZ3FzdWxicXVtaWxpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDM3OTYzNzMsImV4cCI6MjA1OTM3MjM3M30.oZrPuyYdMzUuIWXwbqiFNk7qjzBz4Eq4MGULQOZMp1U';
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase1 = createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener('DOMContentLoaded', async () => {
   // Fetch players (no gamemode filtering for now)
-  const { data: players, error } = await supabase
+  const { data: players, error } = await supabase1
     .from('tiers')
     .select('*')
     .order('tier', { ascending: true });
