@@ -3,45 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DoorPvP Lista Tierów</title>
+  <title>Tierlist DoorPvP</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-gray-100">
   <header class="py-6 bg-gray-800">
     <div class="container mx-auto text-center">
-      <h1 class="text-4xl font-bold">Lista Tierów DoorPvP</h1>
-      <p class="mt-2 text-lg text-gray-400">Sprawdź rankingi graczy i ich poziomy</p>
-      <div class="mt-4">
-        <label for="tier-filter" class="block text-sm mb-2 text-gray-300">Filtruj według tieru:</label>
-        <select id="tier-filter" class="bg-gray-700 text-gray-100 rounded-lg py-2 px-4">
-          <option value="all">Wszystkie tiery</option>
-          <option value="HT1">HT1</option>
-          <option value="LT1">LT1</option>
-          <option value="HT2">HT2</option>
-          <option value="LT2">LT2</option>
-          <option value="HT3">HT3</option>
-          <option value="LT3">LT3</option>
-          <option value="HT4">HT4</option>
-          <option value="LT4">LT4</option>
-          <option value="LT5">LT5</option>
-        </select>
-      </div>
+      <h1 class="text-4xl font-bold">Tierlist DoorPvP</h1>
+      <p class="mt-2 text-lg text-gray-400">Sprawdź rankingi graczy w DoorPvP!</p>
     </div>
   </header>
+
   <main class="container mx-auto mt-6 px-4">
-    <table class="w-full table-auto border-collapse bg-gray-800 text-sm rounded-lg overflow-hidden">
-      <thead>
-        <tr class="bg-gray-700 text-gray-300">
-          <th class="px-4 py-2 cursor-pointer" id="sort-username">Nazwa użytkownika &#9650;&#9660;</th>
-          <th class="px-4 py-2 cursor-pointer" id="sort-tier">Tier &#9650;&#9660;</th>
-        </tr>
-      </thead>
-      <tbody id="player-list" class="divide-y divide-gray-700"></tbody>
-    </table>
+    <div class="grid grid-cols-10 gap-4">
+      <!-- HT1 -->
+      <div id="ht1-column" class="bg-green-600 rounded-lg p-4">
+        <h2 class="text-xl font-bold text-center text-gray-100 border-b border-gray-700 pb-2">HT1</h2>
+        <ul class="space-y-2" id="ht1-list"></ul>
+      </div>
+      <!-- LT1 -->
+      <div id="lt1-column" class="bg-green-400 rounded-lg p-4">
+        <h2 class="text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">LT1</h2>
+        <ul class="space-y-2" id="lt1-list"></ul>
+      </div>
+      <!-- HT2 -->
+      <div id="ht2-column" class="bg-blue-600 rounded-lg p-4">
+        <h2 class="text-xl font-bold text-center text-gray-100 border-b border-gray-700 pb-2">HT2</h2>
+        <ul class="space-y-2" id="ht2-list"></ul>
+      </div>
+      <!-- LT2 -->
+      <div id="lt2-column" class="bg-blue-400 rounded-lg p-4">
+        <h2 class="text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">LT2</h2>
+        <ul class="space-y-2" id="lt2-list"></ul>
+      </div>
+      <!-- HT3 -->
+      <div id="ht3-column" class="bg-yellow-500 rounded-lg p-4">
+        <h2 class="text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">HT3</h2>
+        <ul class="space-y-2" id="ht3-list"></ul>
+      </div>
+      <!-- LT3 -->
+      <div id="lt3-column" class="bg-yellow-300 rounded-lg p-4">
+        <h2 class="text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">LT3</h2>
+        <ul class="space-y-2" id="lt3-list"></ul>
+      </div>
+      <!-- HT4 -->
+      <div id="ht4-column" class="bg-orange-500 rounded-lg p-4">
+        <h2 class="text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">HT4</h2>
+        <ul class="space-y-2" id="ht4-list"></ul>
+      </div>
+      <!-- LT4 -->
+      <div id="lt4-column" class="bg-orange-300 rounded-lg p-4">
+        <h2 class="text-xl font-bold text-center text-gray-900 border-b border-gray-700 pb-2">LT4</h2>
+        <ul class="space-y-2" id="lt4-list"></ul>
+      </div>
+      <!-- HT5 -->
+      <div id="ht5-column" class="bg-red-600 rounded-lg p-4">
+        <h2 class="text-xl font-bold text-center text-gray-100 border-b border-gray-700 pb-2">HT5</h2>
+        <ul class="space-y-2" id="ht5-list"></ul>
+      </div>
+      <!-- LT5 -->
+      <div id="lt5-column" class="bg-red-800 rounded-lg p-4">
+        <h2 class="text-xl font-bold text-center text-gray-100 border-b border-gray-700 pb-2">LT5</h2>
+        <ul class="space-y-2" id="lt5-list"></ul>
+      </div>
+    </div>
   </main>
-  <footer class="py-4 bg-gray-800 text-center text-gray-400">
-    <p>&copy; 2025 DoorPvP | Zaprojektowane dla graczy</p>
+
+  <footer class="py-4 bg-gray-800 text-center text-gray-400 mt-6">
+    <p>&copy; 2025 DoorPvP | Zaprojektowane przez Axillity</p>
   </footer>
+
   <script src="js/script.js"></script>
 </body>
 </html>
