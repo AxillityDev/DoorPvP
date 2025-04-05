@@ -23,5 +23,16 @@ function populateTierColumns() {
   });
 }
 
+// Function to toggle visibility of a tier's list
+function toggleTier(tierId) {
+  const tierList = document.getElementById(tierId);
+  const icon = document.getElementById(`${tierId.replace('-list', '')}-icon`); // Icon ID based on tierId
+
+  if (tierList) {
+    tierList.classList.toggle("hidden"); // Add/remove Tailwind's hidden class
+    icon.textContent = tierList.classList.contains("hidden") ? "+" : "−"; // Update icon text
+  }
+}
+
 // Populate columns when the page loads
 populateTierColumns();
