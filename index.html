@@ -404,7 +404,9 @@
             <img src="https://i.ibb.co/PZBb4wLq/Zrzut-ekranu-2025-04-04-203004.png" alt="DoorPvP Kit" class="kit-image">
         </div>
     </div>
-<script type="module">
+<script type="module"></script>
+
+    <script>
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
 // Supabase setup
@@ -416,7 +418,6 @@ const supabase1 = createClient(supabaseUrl, supabaseKey);
 const { data: players, error } = await supabase1
   .from('tiers')
   .select('*')
-  .eq('gamemode', 'doorpvp')
   .order('tier', { ascending: true });
 
 if (error) {
@@ -425,9 +426,6 @@ if (error) {
   console.log(players); // Now you have the data, inject it into the DOM
   // You can adapt your `tiers` array dynamically from here
 }
-</script>
-
-    <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Tier data
             const tiers = [1, 2, 3, 4, 5].map(tierNum => ({
