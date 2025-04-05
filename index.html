@@ -3,20 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DoorPvP Tier List</title>
-  <link rel="stylesheet" href="css/style.css">
+  <title>DoorPvP Leaderboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <header>
-    <h1>DoorPvP Tier List</h1>
-    <input type="text" id="search-bar" placeholder="Wyszukaj gracza...">
+<body class="bg-gray-900 text-gray-100">
+  <header class="py-6 bg-gray-800">
+    <div class="container mx-auto text-center">
+      <h1 class="text-4xl font-bold">DoorPvP Leaderboard</h1>
+      <p class="mt-2 text-lg text-gray-400">Zobacz ranking graczy i ich osiągnięcia!</p>
+    </div>
   </header>
-  <main>
-    <ul id="player-list"></ul>
+
+  <main class="container mx-auto mt-6 px-2 md:px-4">
+    <div class="overflow-x-auto">
+      <table class="table-auto w-full border-collapse bg-gray-800 rounded-lg shadow-lg">
+        <thead>
+          <tr class="bg-gray-700 text-gray-300">
+            <th class="px-4 py-2 text-left">Miejsce</th>
+            <th class="px-4 py-2 text-left">Gracz</th>
+            <th class="px-4 py-2 text-left">Punkty</th>
+            <th class="px-4 py-2 text-left">Region</th>
+            <th class="px-4 py-2 text-left">Tiery</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-body" class="divide-y divide-gray-700">
+          <!-- Player rows will be dynamically added here -->
+        </tbody>
+      </table>
+    </div>
   </main>
-  <footer>
-    <p>&copy; 2025 DoorPvP</p>
+
+  <footer class="py-4 bg-gray-800 text-center text-gray-400 mt-6">
+    <p>&copy; 2025 DoorPvP | Zaprojektowane dla społeczności PvP</p>
   </footer>
+
   <script src="js/script.js"></script>
 </body>
 </html>
