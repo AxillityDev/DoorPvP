@@ -15,6 +15,8 @@
                     tier: "Tier 3",
                     color: "var(--tier3-color)",
                     players: [
+                        { name: "xEmiloem_", isHT: false },
+                        { name: "Bart_5505", isHT: false },
                         { name: "Bokshaq", isHT: false },
                         { name: "WojPRO1", isHT: false }
                     ]
@@ -30,7 +32,7 @@
                     tier: "Tier 5",
                     color: "var(--tier5-color)",
                     players: [
-                        { name: "MrPotato5532", isHT: false },
+                        { name: "MrPotato5532", isHT: true },
                         { name: "Axillity", isHT: false }
                     ]
                 }
