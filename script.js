@@ -30,6 +30,7 @@
                     tier: "Tier 5",
                     color: "var(--tier5-color)",
                     players: [
+                        { name: "MrPotato5532", isHT: false },
                         { name: "Axillity", isHT: false }
                     ]
                 }
