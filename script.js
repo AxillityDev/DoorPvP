@@ -4,7 +4,9 @@
                 {
                     tier: "Tier 1",
                     color: "var(--tier1-color)",
-                    players: []
+                    players: [
+                        { name: "Axillity", isHT: true }
+                    ]
                 },
                 {
                     tier: "Tier 2",
@@ -32,8 +34,7 @@
                     tier: "Tier 5",
                     color: "var(--tier5-color)",
                     players: [
-                        { name: "MrPotato5532", isHT: true },
-                        { name: "Axillity", isHT: false }
+                        { name: "MrPotato5532", isHT: true }
                     ]
                 }
             ];
